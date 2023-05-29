@@ -27,7 +27,7 @@ To get a local copy up and running, follow these steps:
 
 ### Installation
 1. Clone the repo with your command line or GUI
-"git clone https://github.com/<your_username>/<repo_name>.git"
+"git clone https://github.com/noschix/ESWebDev23.git"
 2. Open index.html in your preferred browser.
 
 
