@@ -375,3 +375,10 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+footer p {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 10px;
+}
