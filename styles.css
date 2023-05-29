@@ -94,7 +94,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 80svh;
     border-bottom-left-radius: 50% 5%;
     border-bottom-right-radius: 50% 5%;
 }
@@ -282,6 +282,10 @@ body {
         display: flex;
         justify-content: center; 
         width: 100%; 
+    }
+
+    .banner {
+        height: 60svh;
     }
 }
 
