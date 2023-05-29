@@ -1,0 +1,172 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Lexend", sans-serif;
+}
+
+.header {
+    background-color: #2c2c2c;
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+    top: 0px;
+    position: sticky;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1350px;
+    width: 100%;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    max-width: 180px;
+    height: auto;
+    padding-top: 5px;
+}
+
+.nav-menu {
+    display: flex;
+}
+
+.menu-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.menu-item {
+    margin-left: 2em;
+}
+
+.menu-item a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+    padding: 9px 15px;
+    border-radius: 5px;
+}
+
+.menu-item a:hover {
+    color: #FD7442;
+}
+
+.menu-item .login {
+    padding: 9px 20px;
+    border: 2px rgb(87, 87, 87) solid;
+    font-weight: bold;
+}
+
+.menu-item .login:hover {
+    border: 2px #fff solid;
+}
+
+.menu-item .signup {
+    background-color: #FD7442;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.menu-item .signup:hover {
+    background-color: #fff;
+}
+
+.banner {
+    background: linear-gradient(to right, #FF7F00, #FF5500);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.banner-content {
+    text-align: center;
+    padding: 20px;
+}
+
+.banner-title {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.banner-subtitle {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+}
+
+.banner-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.action-button {
+    background-color: white;
+    color: #FF7F00;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #FF5500;
+    color: white;
+}
+
+.text-section {
+    padding: 40px;
+    background-color: #fff;
+}
+
+.text-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.text-title {
+    font-size: 2em;
+    color: #FF7F00;
+    margin-bottom: 20px;
+}
+
+.text-desc {
+    font-size: 1.2em;
+    color: #333;
+}
+
+  
+@media screen and (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .menu-item {
+        margin-bottom: 1em;
+    }
+
+    .menu-item a {
+        text-align: center;
+    }
+}
