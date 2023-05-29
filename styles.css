@@ -60,7 +60,7 @@ body {
     border-radius: 5px;
 }
 
-.menu-item a:hover {
+.menu-item a:hover{
     color: #FD5E1C;
 }
 
@@ -80,7 +80,7 @@ body {
     font-weight: bold;
 }
 
-.menu-item .signup:hover {
+.menu-item .signup:hover{
     background-color: #fff;
 }
 
@@ -201,6 +201,11 @@ body {
     transform: scale(1.1);
 }
 
+/* Default (desktop) */
+.mobile-only {
+    display: none;
+}
+
 @media (min-width: 769px) {
     .text-content {
         flex-direction: row;
@@ -208,6 +213,14 @@ body {
 }
   
 @media screen and (max-width: 768px) {
+
+    .desktop-only {
+        display: none;
+    }
+    .mobile-only {
+        display: block;
+    }
+    
     .header-content {
         flex-direction: column;
     }
@@ -215,7 +228,7 @@ body {
     .nav-menu {
         flex-direction: column;
         align-items: center;
-        width: 100%;
+        justify-content: space-between;
         padding-top: 20px;
     }
 
@@ -226,7 +239,7 @@ body {
 
     .menu-item a {
         text-align: center;
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     .text-content {
@@ -242,6 +255,33 @@ body {
         height: auto;
         padding-bottom: 20px;
         flex: 0;
+    }
+
+    .signup-fullwidth {
+        width: 100%;
+        padding-bottom: 10px;
+        padding-top: 5px;
+    }
+
+    .signup-fullwidth .signup {
+        background-color: #FD5E1C;
+        font-weight: bold;
+    }
+    
+    .signup-fullwidth .signup:hover {
+        background-color: #fff;
+    }
+    
+    .signup-fullwidth a {
+        text-decoration: none;
+        color: white;
+        font-size: 1rem;
+        padding: 13px 20px;
+        transition: color 0.3s ease;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center; 
+        width: 100%; 
     }
 }
 
