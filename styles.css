@@ -15,8 +15,7 @@ body {
     justify-content: center;
     padding: 1em;
     top: 0px;
-    position: fixed;
-    width: 100%;
+    position: sticky;
     z-index: 9999;
 }
 
