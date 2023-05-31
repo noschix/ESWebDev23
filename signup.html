@@ -15,9 +15,49 @@
     <script src="https://kit.fontawesome.com/4bebb4b770.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <a href="index.html"><img src="images/logo.png" alt="SecretAgent Logo" class="logo"></a>
+            </div>
+            <nav class="nav-menu">
+                <ul class="menu-list">
+                    <li class="menu-item"><a href="#">Clients</a></li>
+                    <li class="menu-item"><a href="#agents">Agents</a></li>
+                    <li class="menu-item"><a href="login.html" class="login">Log In</a></li>
+                    <li class="menu-item desktop-only"><a href="signup.html" class="signup">Sign Up</a></li>
+                </ul>
+                <div class="mobile-only signup-fullwidth"><a href="signup.html" class="signup">Sign Up</a></div>
+            </nav>
+        </div>
+    </header>
 
-    <!--#YOUR CODE GOES HERE-->
+    <section class="signup-form">
+        <h2>Sign Up to Secret Agent</h2>
     
+        <form action="/submit_signup" method="post">
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" required><br>
+            
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" required><br>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+            
+            <label for="password">Password*:</label>
+            <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br>
+            
+            <div class="terms-container"> 
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms"> I accept the Terms and Conditions</label>
+            </div>
+            
+            
+            <input type="submit" value="Sign Up">
+    
+            <p>*Password must be at least 8 characters long, and include at least one uppercase letter, one lowercase letter, and one numeric digit.</p>
+    </section>    
 
     <footer>
         <p>Made with <svg viewBox="0 0 1792 1792" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="height: 0.8rem;"><path d="M896 1664q-26 0-44-18l-624-602q-10-8-27.5-26T145 952.5 77 855 23.5 734 0 596q0-220 127-344t351-124q62 0 126.5 21.5t120 58T820 276t76 68q36-36 76-68t95.5-68.5 120-58T1314 128q224 0 351 124t127 344q0 221-229 450l-623 600q-18 18-44 18z" fill="#e25555"></path></svg> in our Web-Dev Class @ Esade</p>
