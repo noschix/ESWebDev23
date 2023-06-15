@@ -381,7 +381,13 @@ body {
     font-size: 0.8em;
     letter-spacing: 1px;
     opacity: 0.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 
 .agent-action {
     padding: 7px;
@@ -398,7 +404,6 @@ body {
     transition: color 0.3s ease;
     border-radius: 5px;
     transition: scale 0.3s ease;
-
 }
 
 .hire-agent {
@@ -647,7 +652,7 @@ label:last-child {
     margin-right: 10px;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
+input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -676,3 +681,79 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #222;
 }
+
+/* Style for the new subpage */
+.agent-grid-subpage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    padding: 20px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.agent-card-subpage {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    min-width: 230px;
+    max-width: 315px;
+    width: 100%;
+    color: #ffffff;
+    text-align: left;
+    line-height: 1.4em;
+    background-color: #222222;
+    border-radius: 20px;
+}
+
+.text-section-subpage {
+    text-align: center;
+    padding: 2em;
+    width: 100%;
+}
+
+.text-content-subpage {
+    width: 100%;    
+    margin: 0 auto;
+}
+
+.search-input-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1em 0;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1em;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1em;
+}
+
+.search-input:focus {
+    border: 2px solid #555;
+}
+
+/* Only apply smooth scrolling when the user hasn't set their motion preference to "reduce" */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  
+  /* Offset the element scrolled to */
+  section {
+    scroll-margin-top: 5rem;
+  }
+
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    border: 1px solid #454545;
+  }
