@@ -63,7 +63,12 @@ if(mysqli_num_rows($result) > 0){
     // Start session
     $_SESSION["user_id"] = $user_id;
     $_SESSION["role"] = $role;
-    header("Location: welcome.html");
+
+    if($role == "client"){
+        header("Location: dashboard-client.html");
+    } else {
+        header("Location: dashboard-agent.html");
+    }
 }
 
 ?>
