@@ -3,9 +3,9 @@
 include 'db.php';
 
 $email = $_POST['email'];
-$firstname = $_POST['firstname'];
-$lastname = $_POST['lastname'];
-$password = $_POST['password'];
+$firstname = $_POST['fname'];
+$lastname = $_POST['lname'];
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hashing the password
 $role = $_POST["role"] == "agent" ? "agent" : "client"; 
 
 
