@@ -46,7 +46,8 @@
             <input type="email" id="email" name="email" required><br>
 
             <label for="role">Role:</label>
-            <select id="role" name="role" required>
+            <select id="role" name="role" required aria-placeholder="Please select">
+                <option value="" disabled selected hidden>Please Choose...</option>
                 <option value="client">Client</option>
                 <option value="agent">Agent</option>
             </select>
