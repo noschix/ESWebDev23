@@ -67,9 +67,9 @@ if(mysqli_num_rows($result) > 0){
     $_SESSION["role"] = $role;
 
     if($role == "client"){
-        header("Location: dashboard-client.html");
+        header("Location: dashboard-client.php");
     } else {
-        header("Location: dashboard-agent.html");
+        header("Location: dashboard-agent.php");
     }
 }
 

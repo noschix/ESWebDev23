@@ -22,7 +22,7 @@
             $_SESSION["uuid"] = $row["uuid"];
             $_SESSION["role"] = $row["role"]; 
         
-            header("Location: dashboard-client.html"); //redirect to the index page
+            header("Location: dashboard-client.php"); //redirect to the index page
         } else {
             header("Location: error_login.html"); //redirect to the login page
         }
