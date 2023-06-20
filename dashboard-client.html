@@ -191,11 +191,10 @@
                     button.css('background-color', '');
                     button.css('color', '');
                     button.addClass('unhire-agent');
-                    //remove css 
                     button.html('<i class="fas fa-times"></i> Unhire');
                     button.prop('disabled', false);
                 }, 1500);
-            } else if (response.message === 'Agent hire failed.') {
+            } else if (response.message === 'Agent unhire failed.') {
                 button.css('background-color', 'orange');
                 button.html('Hire');
             }

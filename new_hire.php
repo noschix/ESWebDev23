@@ -23,23 +23,38 @@ if(isset($_SESSION['user_id']) && isset($_POST['agent_id'])) {
         $clientIdRow = $getClientId->fetch(PDO::FETCH_ASSOC);
         $clientId = $clientIdRow['client_id'];
 
-        // Now, insert the new relationship into the matches table
-        $currentTimestamp = date('Y-m-d H:i:s');
-        $insertMatch = $dbh->prepare("INSERT INTO matches (client_id, agent_id, created) VALUES (:clientId, :agentId, :created)");
-        $insertMatch->bindParam(':clientId', $clientId);
-        $insertMatch->bindParam(':agentId', $agentId);
-        $insertMatch->bindParam(':created', $currentTimestamp);
-        $insertMatch->execute();
-        
+        // Check if the client has already hired the agent
+        $checkMatch = $dbh->prepare("SELECT * FROM matches WHERE client_id = :clientId AND agent_id = :agentId");
+        $checkMatch->bindParam(':clientId', $clientId);
+        $checkMatch->bindParam(':agentId', $agentId);
+        $checkMatch->execute();
+
+        // If a match is found, unhire the agent by deleting the match record
+        if ($checkMatch->rowCount() > 0) {
+            $deleteMatch = $dbh->prepare("DELETE FROM matches WHERE client_id = :clientId AND agent_id = :agentId");
+            $deleteMatch->bindParam(':clientId', $clientId);
+            $deleteMatch->bindParam(':agentId', $agentId);
+            $deleteMatch->execute();
+            echo json_encode(["message" => "Agent unhired successfully."]);
+        } else {
+            // If no match is found, hire the agent by inserting a new match record
+            $currentTimestamp = date('Y-m-d H:i:s');
+            $insertMatch = $dbh->prepare("INSERT INTO matches (client_id, agent_id, created) VALUES (:clientId, :agentId, :created)");
+            $insertMatch->bindParam(':clientId', $clientId);
+            $insertMatch->bindParam(':agentId', $agentId);
+            $insertMatch->bindParam(':created', $currentTimestamp);
+            $insertMatch->execute();
+            echo json_encode(["message" => "Agent hired successfully."]);
+        }
+
         // If we made it here without an exception, commit the transaction
         $dbh->commit();
-        echo json_encode(["message" => "Agent hired successfully."]);
     } catch (Exception $e) {
         // An error occurred; rollback the transaction
         $dbh->rollBack();
-        echo json_encode(["message" => "Failed to hire agent: " . $e->getMessage()]);
+        echo json_encode(["message" => "Failed to hire/unhire agent: " . $e->getMessage()]);
     }
 } else {
-    echo json_encode(["message" => "User must be logged in to hire an agent."]);
+    echo json_encode(["message" => "User must be logged in to hire/unhire an agent."]);
 }
 ?>
