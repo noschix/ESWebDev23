@@ -92,6 +92,9 @@
     var labels = ['nature', 'beach', 'bowling', 'cars', 'city', 'landscape', 'architecture', 'abstract', 'minimalistic'];
 var agents = [];
 var hiredAgents = [];
+//global function to run the agentfetch
+var GlobalFunc = function(){};
+
  $('.agent-grid2').on('click', '.hire-agent, .unhire-agent', function(e) {
     e.preventDefault();
     var button = $(this);
@@ -293,8 +296,7 @@ function displayHiredAgents(hiredAgents) {
     $('.agent-grid-hired').html(html);
 }
 
-//global function to run the agentfetch
-var GlobalFunc = function(){}
+
 
 $(document).ready(function() {
     $.get('getUserId.php', function(data) {
