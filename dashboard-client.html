@@ -89,6 +89,22 @@
         $(userIdElement).insertAfter('.footertext');
     });
     // Fetch all agent data
+
+    // Fetch all hired agents
+    var hiredAgents = [];
+
+    $.ajax({
+        url: 'fetch_hired_agents.php',
+        type: 'get',
+        dataType: 'json',
+        success: function(response) {
+            hiredAgents = response;
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+
     $.getJSON('all_agents.php', function(data) {
         console.log("Received data from server:", data);
 
@@ -177,20 +193,7 @@
         // Display all agents initially
         displayAgents(agents);
 
-        // Fetch all hired agents
-        var hiredAgents = [];
-
-        $.ajax({
-            url: 'fetch_hired_agents.php',
-            type: 'get',
-            dataType: 'json',
-            success: function(response) {
-                hiredAgents = response;
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(textStatus, errorThrown);
-            }
-        });
+        
 
         $('.agent-grid2').on('click', '.hire-agent, .unhire-agent', function(e) {
             e.preventDefault();
