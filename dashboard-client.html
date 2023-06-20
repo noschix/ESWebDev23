@@ -330,7 +330,6 @@ function displayHiredAgents(hiredAgents) {
 
 $(document).ready(function() {
     $.get('getUserId.php', function(data) {
-        var userInfo = JSON.parse(data);
         if (userInfo.error) {
         console.error(userInfo.error);
         } else {

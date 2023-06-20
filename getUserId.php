@@ -12,10 +12,9 @@ if(isset($_SESSION['user_id'])) {
     $dbh = new PDO('mysql:host=localhost;dbname=t3_alberto', 'admin232m', '6WO7hcod~Pn8^umu');
 
     // Prepare a SQL statement to select the first_name from the users table where the uuid equals the user ID
-    $stmt = $dbh->prepare("SELECT client_firstname FROM clients WHERE user_id = :userId");
+    $stmt = $dbh->prepare("SELECT client_firstname FROM clients WHERE user_id = $userId");
 
     // Bind the user ID to the SQL statement and execute it
-    $stmt->bindParam(':userId', $userId);
     $stmt->execute();
 
     // Fetch the row from the database
