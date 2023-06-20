@@ -168,18 +168,20 @@
 
         $('.agent-grid2').on('click', '.hire-agent', function(e) {
             e.preventDefault();
-    
-    var $this = $(this);
-    var agentId = $this.data('agent-id');
+            var button = $(this);
+            var agentId = button.data('agent-id');
 
-    $.ajax({
-        url: 'hire_agent.php',
-        method: 'POST',
-        data: {
-            agent_id: agentId
-        },
-        dataType: 'json',
-        success: function(response) {
+            // Change button appearance
+            button.html('<i class="fas fa-check"></i>');  // Replaces "Hire" text with checkmark
+            button.css('background-color', 'green');
+            button.css('color', 'white');
+
+            // Send a request to the server
+            $.ajax({
+                url: 'new_hire.php',
+                type: 'post',
+                data: { agent_id: agentId },
+                success: function(response) {
             if(response.message === 'Agent hired successfully.') {
                 $this.css('background-color', 'green');
                 $this.html('<i class="fas fa-check"></i>');
@@ -195,7 +197,7 @@
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
         }
-        });     
+            });
         });
     });
     });
