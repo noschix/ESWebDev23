@@ -149,7 +149,7 @@ function displayAgentsWithHire(agents) {
         success: function(response) {
             hiredAgents = response;
             displayAgents(agents);
-            //displayHiredAgents(response);
+            displayHiredAgents(hiredAgents);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
