@@ -1,8 +1,7 @@
 
 <?php
-var_dump($_SESSION);
 include('db.php'); //call to the connection file
-
+Print_r($_SESSION);
 header('Content-Type: application/json');
 
 if(isset($_SESSION['user_id']) && isset($_POST['agent_id'])) {
