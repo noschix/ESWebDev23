@@ -182,6 +182,8 @@
 
         // Select a label for the background image URL and store on agent object
         agent.label = labels[index % labels.length];
+        //assign pro status on random basis
+        agent.pro = (Math.random() > 0.5) ? true : false;
 
         // Store index on agent object
         agent.index = index;
@@ -214,7 +216,11 @@
 
             // Create agent card
             html += '<div class="agent-card agent-card-subpage">';
-            html += '<div style="background-image: url(\'' + bgImageUrl + '\');" class="agent-cover"><span class="pro">PRO</span></div>';
+            html += '<div style="background-image: url(\'' + bgImageUrl + '\');" class="agent-cover">';
+            if(agent.pro) {
+                html += '<span class="pro">PRO</span>';
+            }
+            html += '</div>';
             html += '<div class="agent-content">';
             html += '<img src="' + avatarUrl + '" alt="profile" class="agent-profile" />';
             html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
