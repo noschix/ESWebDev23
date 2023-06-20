@@ -9,12 +9,13 @@ $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hashing the 
 $role = $_POST["role"] == "agent" ? "agent" : "client"; 
 
 
-$query = "SELECT iduser, email FROM users WHERE email = '$email'"; 
+$query = "SELECT * FROM users WHERE email = '$email'"; 
 $result = mysqli_query($conn, $query);
 
 // Check if query failed
 if ($result == false){
     header("Location: query_error.html");
+    echo $query;
     die("Query failed: " . mysqli_error($conn));
 }
 
