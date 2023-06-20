@@ -106,39 +106,19 @@
         // Store index on agent object
         agent.index = index;
     });
-    
+
         // Function to filter agents based on a search term
         function filterAgents(term) {
-        return agents.map(function(agent) {
-            var isMatch = agent.agent_firstname.toLowerCase().includes(term.toLowerCase()) ||
-                agent.agent_lastname.toLowerCase().includes(term.toLowerCase()) ||
-                agent.agent_city.toLowerCase().includes(term.toLowerCase()) ||
-                agent.agent_country.toLowerCase().includes(term.toLowerCase()) ||
-                agent.agent_exp.toLowerCase().includes(term.toLowerCase()) ||
-                agent.agent_about.toLowerCase().includes(term.toLowerCase());
-            
-            // Include the is_hired property in the agent object
-            return Object.assign({}, agent, {is_hired: agent.is_hired, is_match: isMatch});
-        }).filter(function(agent) {
-            return agent.is_match;
-        });
+            return agents.filter(function(agent) {
+                return agent.agent_firstname.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_lastname.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_city.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_country.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_exp.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_about.toLowerCase().includes(term.toLowerCase());
+            });
         }
 
-    
-        $.ajax({
-        url: 'retreive_clients_agents.php',
-        type: 'get',
-        success: function(response) {
-            if (response.error) {
-                console.log('Error: ' + response.error);
-            } else {
-                displayAgents(response);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-        }
-        });
 
 
        // Function to display agents
@@ -153,6 +133,10 @@
             var bgImageUrl = 'https://source.unsplash.com/featured/300x' + (201 + agent.index) + '?' + agent.label;
             var websiteUrl = agent.agent_website.includes('http') ? agent.agent_website : 'http://' + agent.agent_website;
 
+            // Create agent card
+           // var buttonClass = hiredAgents.includes(agent.agent_id) ? 'unhire-agent' : 'hire-agent';
+            //var buttonLabel = hiredAgents.includes(agent.agent_id) ? 'Unhire' : 'Hire';
+
 
             // Create agent card
             html += '<div class="agent-card agent-card-subpage">';
@@ -165,12 +149,13 @@
             html += '<img src="' + avatarUrl + '" alt="profile" class="agent-profile" />';
             html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
             html += '<p>' + agent.agent_about + '</p>';
-                // If the agent is hired, show the 'Unhire' state. Otherwise, show the 'Hire' state
-            if(agent.is_hired) {
+            // If the agent is hired, show the 'Unhire' state. Otherwise, show the 'Hire' state
+            if(hiredAgents.includes(agent.agent_id)) {
                 html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent unhire-agent"><i class="fas fa-times"></i> Unhire</a>';
             } else {
                 html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent">Hire</a>';
             }
+            html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent">Hire</a>';
             html += '<a target="_blank" href="' + websiteUrl + '" class="agent-action more-info" style="padding: 7px;color: #ffffff;font-size: 0.7em;text-transform: uppercase;margin: 10px 0;display: inline-block;opacity: 1;width: 47%;text-align: center;text-decoration: none;font-weight: bold;">Website</a>';
             html += '</div></div>';
         });
@@ -188,9 +173,25 @@
             displayAgents(filteredAgents);
         });
 
+        // Display all agents initially
+        displayAgents(agents);
 
+        // Fetch all hired agents
+        var hiredAgents = [];
 
-        $('.agent-grid2').on('click', '.hire-agent', function(e) {
+        $.ajax({
+            url: 'fetch_hired_agents.php',
+            type: 'get',
+            dataType: 'json',
+            success: function(response) {
+                hiredAgents = response;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+
+        $('.agent-grid2').on('click', '.hire-agent, .unhire-agent', function(e) {
             e.preventDefault();
             var button = $(this);
             var agentId = button.data('agent-id');
@@ -210,6 +211,7 @@
                 button.css('background-color', 'green');
                 button.html('<i class="fas fa-check"></i>');
                 button.prop('disabled', true);
+                hiredAgents.push(agentId);
                 setTimeout(function() {
                     //add .unhire-agent class
                     button.css('background-color', '');
@@ -220,8 +222,11 @@
                 }, 1500);
             } else if (response.message === 'Agent unhired successfully.') {
                 button.removeClass('unhire-agent');
-                button.css('background-color', '');
+                button.css('background-color', 'orange');
                 button.html('Hire');
+                hiredAgents = hiredAgents.filter(function(id) {
+                    return id !== agentId;
+                });
             } else {
                 button.css('background-color', 'grey');
                 button.html('<i class="fa fa-repeat"></i> Try again');
