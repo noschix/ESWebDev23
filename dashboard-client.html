@@ -185,11 +185,7 @@
             if(response.message === 'Agent hired successfully.') {
                 $this.css('background-color', 'green');
                 $this.html('<i class="fas fa-check"></i>');
-                setTimeout(function() {
-                    $this.css('background-color', 'red');
-                    $this.html('<i class="fas fa-times"></i>');
-                }, 2000);
-            } else if (response.message === 'Agent unhired successfully.') {
+            } else if (response.message === 'Agent hire failed.') {
                 $this.css('background-color', 'orange');
                 $this.html('Hire');
             }
