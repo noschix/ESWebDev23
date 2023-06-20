@@ -22,9 +22,9 @@ if ($result->num_rows > 0) {
     }
 } 
 
-echo json_encode($agents);
+//echo json_encode($agents);
 
-$conn->close();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,8 +70,43 @@ $conn->close();
     </section>
 
     <section class="agent-grid agent-grid-subpage" id="agent-results">
-        <!-- Agent cards will be dynamically populated here -->
+        
+    <?php
+        // Assuming you have a database connection established
+        // Fetch the agent data from the databas;
+        // Loop through the result set and generate the agent cards dynamically
+        while ($row = mysqli_fetch_assoc($agents)) {
+            $imageIndex = rand(1, 100); // Generate a random index for avatar image
+
+            // Extract agent information from the row
+            $agentFirstName = $row['agent_firstname'];
+            $agentLastName = $row['agent_lastname'];
+            $agentExpertise = $row['agent_exp'];
+            $agentAbout = $row['agent_about'];
+
+            // Generate the agent card dynamically
+            echo '<div class="agent-card agent-card-subpage">';
+            echo '<div style="background-image: url(\'https://source.unsplash.com/featured/300x' . ($imageIndex + 200) . '?nature\');" class="agent-cover">';
+            echo '<span class="pro">PRO</span>';
+            echo '</div>';
+            echo '<div class="agent-content">';
+            echo '<img src="https://xsgames.co/randomusers/avatar.php?g=' . (($imageIndex % 2 == 0) ? 'female' : 'male') . '&amp;" alt="profile" class="agent-profile" />';
+            echo '<h2>' . $agentFirstName . ' ' . $agentLastName . '<span>' . $agentExpertise . '</span></h2>';
+            echo '<p>' . $agentAbout . '</p>';
+            echo '<div class="agent-actions">';
+            echo '<a href="#" class="agent-action hire-agent">Hire</a>';
+            echo '<a href="#" class="agent-action more-info">More Info</a>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        }
+
+        // Close the database connection
+        $conn->close();
+        ?>
     </section>
+
+
 
 
     <section class="agent-grid agent-grid-subpage">
