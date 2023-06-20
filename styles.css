@@ -759,7 +759,7 @@ input[type="submit"]:hover {
     border: 1px solid #454545;
   }
 
-  .more-info {
+  .agent-action .more-info {
     /*link with no underline and white */
     text-decoration: none;
     color: #fff;
