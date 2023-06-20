@@ -1,31 +1,4 @@
 <!---Copyright Alfaro Mendoza, Alberto; Bernal, Isabella; Sacranie, Kabir Ahmed; Wenzler, Leonhard Paul Hariolf; Raissi, Noah Aria -->
-<?php
-// Assuming you have a database connection established
-include('db.php'); 
-// Fetch all agent data from the database
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Get search term
-$searchTerm = $_GET['term'];
-
-$sql = "SELECT * FROM agents WHERE agent_firstname LIKE '%{$searchTerm}%' OR agent_lastname LIKE '%{$searchTerm}%' OR agent_city LIKE '%{$searchTerm}%' OR agent_country LIKE '%{$searchTerm}%' OR agent_exp LIKE '%{$searchTerm}%' OR agent_about LIKE '%{$searchTerm}%'";
-$result = $conn->query($sql);
-
-$agents = [];
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        $agents[] = $row;
-    }
-} 
-
-echo json_encode($agents);
-
-$conn->close();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -194,29 +167,57 @@ $conn->close();
     </footer>
 
     <script>
-    $(document).ready(function() {
-        console.log("jQuery is loaded and ready!");
+        $(document).ready(function() {
+    // Fetch all agent data
+    $.getJSON('all_agents.php', function(data) {
+        console.log("Received data from server:", data);
+
+        var agents = data;
+
+        // Function to filter agents based on a search term
+        function filterAgents(term) {
+            return agents.filter(function(agent) {
+                return agent.agent_firstname.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_lastname.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_city.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_country.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_exp.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_about.toLowerCase().includes(term.toLowerCase());
+            });
+        }
+
+        // Function to display agents
+        function displayAgents(filteredAgents) {
+            var html = '';
+            $.each(filteredAgents, function(index, agent) {
+                // Create agent card
+                html += '<div class="agent-card agent-card-subpage">';
+                html += '<div style="background-image: url(\'https://source.unsplash.com/featured/300x201?nature\');" class="agent-cover"><span class="pro">PRO</span></div>';
+                html += '<div class="agent-content">';
+                html += '<img src="https://xsgames.co/randomusers/avatar.php?g=male&" alt="profile" class="agent-profile" />';
+                html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
+                html += '<p>' + agent.agent_about + '</p>';
+                html += '<a href="#" class="agent-action hire-agent">Hire</a>';
+                html += '<a href="#" class="agent-action more-info">More Info</a>';
+                html += '</div></div>';
+            });
+
+            // Update the agent grid
+            $('.agent-grid').html(html);
+        }
+
+        // Handle search input keyup event
         $('.search-input').on('keyup', function() {
             var searchTerm = $(this).val();
-            $.getJSON('agent_search.php', { term: searchTerm }, function(data) {
-                var html = '';
-                $.each(data, function(i, agent) {
-                    html += '<div class="agent-card agent-card-subpage">';
-                    html += '<div style="background-image: url(\'https://source.unsplash.com/featured/300x201?nature\');" class="agent-cover"><span class="pro">PRO</span></div>';
-                    html += '<div class="agent-content">';
-                    html += '<img src="https://xsgames.co/randomusers/avatar.php?g=female&" alt="profile" class="agent-profile" />';
-                    html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
-                    html += '<p>' + agent.agent_about + '</p>';
-                    html += '<div class="agent-actions">';
-                    html += '<a href="#" class="agent-action hire-agent">Hire</a>';
-                    html += '<a href="#" class="agent-action more-info">More Info</a>';
-                    html += '</div>';
-                    html += '</div>';
-                    html += '</div>';
-                });
-                $('.agent-grid').html(html);
-            });
+
+            // Filter and display agents
+            var filteredAgents = filterAgents(searchTerm);
+            displayAgents(filteredAgents);
         });
+
+        // Display all agents initially
+        displayAgents(agents);
+    });
     });
     </script>
     <script src="js/main.js"></script>
