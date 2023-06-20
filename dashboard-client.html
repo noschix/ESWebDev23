@@ -185,11 +185,13 @@
             if(response.message === 'Agent hired successfully.') {
                 button.css('background-color', 'green');
                 button.html('<i class="fas fa-check"></i>');
+                button.prop('disabled', true);
                 setTimeout(function() {
-                    button.css('background-color', 'red');
-                    button.html('<i class="fas fa-times"></i>');
-                }, 2000);
-            } else if (response.message === 'Agent unhired successfully.') {
+                    button.addClass('unhire-agent');
+                    button.html('<i class="fas fa-times"></i> Unhire');
+                    button.prop('disabled', false);
+                }, 1500);
+            } else if (response.message === 'Agent hire failed.') {
                 button.css('background-color', 'orange');
                 button.html('Hire');
             }

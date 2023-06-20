@@ -759,3 +759,11 @@ input[type="submit"]:hover {
     margin-top: 5px;
     border: 1px solid #454545;
   }
+
+.unhire-agent {
+    /*red background for button, white text and add transition */
+    background-color: #cb4242!important;
+    color: #fff!important;
+    transition: all 0.3s ease-in-out!important;
+    border: none!important;
+}
