@@ -34,7 +34,6 @@ if(mysqli_num_rows($result) > 0){
     // Check if query failed
     if(!$result){
         header("Location: query_error.html");
-        echo $query;
         die("Query failed: " . mysqli_error($conn));
     }
 
@@ -43,12 +42,13 @@ if(mysqli_num_rows($result) > 0){
 
     // Insert user into agent or client table
     if($role == "agent"){
-        $agent_tel = $_POST['agent_tel'];
+        $agent_about = $_POST['agent_about'];
         $agent_city = $_POST['agent_city'];
         $agent_country = $_POST['agent_country'];
         $agent_website = $_POST['agent_website'];
-        //agent table structure = user_id, agent_firstname, agent_lastname, agent_tel, agent_city, agent_country, agent_website
-        $query = "INSERT INTO `agents` (`agent_id`,`user_id`, `agent_firstname`, `agent_lastname`, `agent_tel`, `agent_city`, `agent_country`, `agent_website`) VALUES (NULL,'$user_id', '$firstname', '$lastname', '$agent_tel', '$agent_city', '$agent_country', '$agent_website')";
+        $agent_exp = $_POST['agent_exp'];
+        //agent table structure = user_id, agent_firstname, agent_lastname, agent_about, agent_city, agent_country, agent_website
+        $query = "INSERT INTO `agents` (`agent_id`,`user_id`, `agent_firstname`, `agent_lastname`,`agent_exp`,`agent_about`, `agent_city`, `agent_country`, `agent_website`) VALUES (NULL,'$user_id', '$firstname', '$lastname','$agent_exp','$agent_about', '$agent_city', '$agent_country', '$agent_website')";
     } else {
         //client table structure = user_id, client_firstname, client_lastname
         $query = "INSERT INTO `clients` (`client_id`,`user_id`, `client_firstname`, `client_lastname`) VALUES (NULL,'$user_id', '$firstname', '$lastname')";
@@ -59,7 +59,6 @@ if(mysqli_num_rows($result) > 0){
     // Check if query failed
     if(!$result2){
         header("Location: query_error.html");
-        echo $query;
         die("Query failed: " . mysqli_error($conn));
     }
 

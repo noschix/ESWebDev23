@@ -689,8 +689,9 @@ input[type="submit"]:hover {
     gap: 20px;
     justify-items: center;
     padding: 20px;
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
+    margin-bottom: 40px;
 }
 
 .agent-card-subpage {

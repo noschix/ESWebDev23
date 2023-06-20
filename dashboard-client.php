@@ -1,4 +1,22 @@
 <!---Copyright Alfaro Mendoza, Alberto; Bernal, Isabella; Sacranie, Kabir Ahmed; Wenzler, Leonhard Paul Hariolf; Raissi, Noah Aria -->
+<?php
+// Assuming you have a database connection established
+
+// Fetch all agent data from the database
+$query = "SELECT * FROM agents";
+$result = mysqli_query($connection, $query);
+
+// Create an empty array to store the agent data
+$agents = array();
+
+// Loop through the result set and store agent data in the array
+while ($row = mysqli_fetch_assoc($result)) {
+    $agents[] = $row;
+}
+
+// Close the database connection
+mysqli_close($connection);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,24 +42,27 @@
                 <ul class="menu-list">
                     <li class="menu-item"><a href="#">Clients</a></li>
                     <li class="menu-item"><a href="#agents">Agents</a></li>
-                    <li class="menu-item"><a href="login.html" class="login">Log In</a></li>
-                    <li class="menu-item desktop-only"><a href="signup.html" class="signup">Sign Up</a></li>
+                    <li class="menu-item"><a href="index.html" class="login">Sign Out</a></li>
                 </ul>
-                <div class="mobile-only signup-fullwidth"><a href="signup.html" class="signup">Sign Up</a></div>
             </nav>
         </div>
     </header>
     
     <section class="text-section text-section-subpage">
         <div class="text-content text-content-subpage">
-                <div class="text-details">
-                    <h2 class="text-title">Search for your Agent</h2>
-                    <div class="search-input-container">
-                        <input type="search" class="search-input" placeholder="Search...">
-                    </div>
+            <div class="text-details">
+                <h2 class="text-title">Search for your Agent</h2>
+                <div class="search-input-container">
+                    <input type="search" class="search-input" placeholder="Search..." oninput="searchAgents(this.value)">
                 </div>
+            </div>
         </div>
     </section>
+
+    <section class="agent-grid agent-grid-subpage" id="agent-results">
+        <!-- Agent cards will be dynamically populated here -->
+    </section>
+
 
     <section class="agent-grid agent-grid-subpage">
         <!-- Agent Card 1 -->
@@ -157,11 +178,58 @@
             </div>
         </div>
     </section>
-
     <footer>
         <p>Made with <svg viewBox="0 0 1792 1792" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="height: 0.8rem;"><path d="M896 1664q-26 0-44-18l-624-602q-10-8-27.5-26T145 952.5 77 855 23.5 734 0 596q0-220 127-344t351-124q62 0 126.5 21.5t120 58T820 276t76 68q36-36 76-68t95.5-68.5 120-58T1314 128q224 0 351 124t127 344q0 221-229 450l-623 600q-18 18-44 18z" fill="#e25555"></path></svg> in our Web-Dev Class @ Esade</p>
         <span style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">Version 1.3</span>
     </footer>
+    
+    <script>
+        var agents = <?php echo json_encode($agents); ?>;
+
+        // Display all agents initially
+        showAgents(agents);
+
+        function searchAgents(searchTerm) {
+            if (searchTerm.trim() === "") {
+                // If no search term is entered, display all agents
+                showAgents(agents);
+            } else {
+                // Filter the search results based on the search term
+                var filteredResults = agents.filter(function(agent) {
+                    var agentData = Object.values(agent).join(" ").toLowerCase();
+                    var searchTermLower = searchTerm.toLowerCase();
+                    return agentData.includes(searchTermLower);
+                });
+
+                // Display the filtered search results
+                showAgents(filteredResults);
+            }
+        }
+
+        function showAgents(agents) {
+            var agentResultsContainer = document.getElementById("agent-results");
+            agentResultsContainer.innerHTML = "";
+
+            agents.forEach(function(agent) {
+                var agentCardHTML = '<div class="agent-card agent-card-subpage">';
+                agentCardHTML += '<div style="background-image: url(\'https://source.unsplash.com/featured/300x201?nature\');" class="agent-cover">';
+                agentCardHTML += '<span class="pro">PRO</span>';
+                agentCardHTML += '</div>';
+                agentCardHTML += '<div class="agent-content">';
+                agentCardHTML += '<img src="https://xsgames.co/randomusers/avatar.php?g=female&amp;" alt="profile" class="agent-profile" />';
+                agentCardHTML += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
+                agentCardHTML += '<p>' + agent.agent_about + '</p>';
+                agentCardHTML += '<div class="agent-actions">';
+                agentCardHTML += '<a href="#" class="agent-action hire-agent">Hire</a>';
+                agentCardHTML += '<a href="#" class="agent-action more-info">More Info</a>';
+                agentCardHTML += '</div>';
+                agentCardHTML += '</div>';
+                agentCardHTML += '</div>';
+
+                agentResultsContainer.innerHTML += agentCardHTML;
+            });
+        }
+    </script>
     <script src="js/main.js"></script>
 </body>
 </html>

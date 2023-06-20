@@ -47,14 +47,35 @@
 
             <label for="role">Role:</label>
             <select id="role" name="role" required aria-placeholder="Please select">
-                <option value="" disabled selected hidden>Please Choose...</option>
+                <option value="" disabled selected hidden>Please select...</option>
                 <option value="client">Client</option>
                 <option value="agent">Agent</option>
             </select>
 
             <div id="agentFields" style="display: none;">
-                <label for="agent_tel">Phone Number: (only numbers)</label>
-                <input type="tel" id="agent_tel" name="agent_tel" pattern="[0-9]{10}" >
+
+                <label for="agent_exp">Expertise:</label>
+                <select id="agent_exp" name="agent_exp">
+                    <option value="" selected disabled>Please select expertise</option>
+                    <option value="Health Insurance">Health Insurance</option>
+                    <option value="Car Insurance">Car Insurance (Auto Insurance)</option>
+                    <option value="Life Insurance">Life Insurance</option>
+                    <option value="Homeowners Insurance">Homeowners Insurance</option>
+                    <option value="Renters Insurance">Renters Insurance</option>
+                    <option value="Disability Insurance">Disability Insurance</option>
+                    <option value="Travel Insurance">Travel Insurance</option>
+                    <option value="Business Insurance">Business Insurance</option>
+                    <option value="Pet Insurance">Pet Insurance</option>
+                    <option value="Umbrella Insurance">Umbrella Insurance</option>
+                    <option value="Dental Insurance">Dental Insurance</option>
+                    <option value="Motorcycle Insurance">Motorcycle Insurance</option>
+                    <option value="Flood Insurance">Flood Insurance</option>
+                    <option value="Earthquake Insurance">Earthquake Insurance</option>
+                    <option value="Liability Insurance">Liability Insurance</option>
+                  </select>
+
+                <label for="agent_about">About yourself: (short)</label>
+                <input type="text" class="agent_about" id="agent_about" name="agent_about" maxlength="90">
                 
                 <label for="agent_city">City:</label>
                 <input type="text" id="agent_city" name="agent_city" >
