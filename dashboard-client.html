@@ -172,7 +172,6 @@
             } else {
                 html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent">Hire</a>';
             }
-            html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent">Hire</a>';
             html += '<a target="_blank" href="' + websiteUrl + '" class="agent-action more-info" style="padding: 7px;color: #ffffff;font-size: 0.7em;text-transform: uppercase;margin: 10px 0;display: inline-block;opacity: 1;width: 47%;text-align: center;text-decoration: none;font-weight: bold;">Website</a>';
             html += '</div></div>';
         });
@@ -226,7 +225,7 @@
                 }, 1500);
             } else if (response.message === 'Agent unhired successfully.') {
                 button.removeClass('unhire-agent');
-                button.css('background-color', 'orange');
+                button.css('background-color', '');
                 button.html('Hire');
                 hiredAgents = hiredAgents.filter(function(id) {
                     return id !== agentId;
