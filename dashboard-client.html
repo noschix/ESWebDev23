@@ -177,7 +177,7 @@ function displayAgents(filteredAgents) {
 
     $.each(filteredAgents, function(index, agent) {
         // Determine gender and create avatar URL
-        var avatarUrl = 'https://i.pravatar.cc/150?img='+(agent.user_id);
+        var avatarUrl = 'https://i.pravatar.cc/150?u='+(agent.user_id);
 
         // Create background image URL
         var bgImageUrl = 'https://source.unsplash.com/featured/300x' + (201 + agent.index) + '?' + agent.label;
@@ -223,7 +223,7 @@ function displayHiredAgents(hiredAgents) {
     }
 
     $.each(hiredAgents, function(index, agent) {
-        var avatarUrl = 'https://i.pravatar.cc/150?img='+(agent.user_id);
+        var avatarUrl = 'https://i.pravatar.cc/150?u='+(agent.user_id);
         var bgImageUrl = 'https://source.unsplash.com/featured/300x' + (201 + agent.user_id);
         var websiteUrl = agent.agent_website.includes('http') ? agent.agent_website : 'http://' + agent.agent_website;
 
