@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include('db.php'); //call to the connection file
 header('Content-Type: application/json');
 
