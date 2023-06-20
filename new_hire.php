@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include('db.php'); //call to the connection file
+require('db.php');
 header('Content-Type: application/json');
 
 if(isset($_SESSION['user_id']) && isset($_POST['agent_id'])) {
@@ -9,7 +9,7 @@ if(isset($_SESSION['user_id']) && isset($_POST['agent_id'])) {
     $agentId = $_POST['agent_id'];
     
     // Create a new PDO instance
-    $dbh = $conn;
+    $dbh = new PDO('mysql:host=localhost;dbname=t3_alberto', 'admin232m', '6WO7hcod~Pn8^umu');
     
     // Start a new transaction
     $dbh->beginTransaction();
