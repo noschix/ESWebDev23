@@ -187,25 +187,37 @@
             });
         }
 
-        // Function to display agents
-        function displayAgents(filteredAgents) {
-            var html = '';
-            $.each(filteredAgents, function(index, agent) {
-                // Create agent card
-                html += '<div class="agent-card agent-card-subpage">';
-                html += '<div style="background-image: url(\'https://source.unsplash.com/featured/300x201?nature\');" class="agent-cover"><span class="pro">PRO</span></div>';
-                html += '<div class="agent-content">';
-                html += '<img src="https://xsgames.co/randomusers/avatar.php?g=male&" alt="profile" class="agent-profile" />';
-                html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
-                html += '<p>' + agent.agent_about + '</p>';
-                html += '<a href="#" class="agent-action hire-agent">Hire</a>';
-                html += '<a href="#" class="agent-action more-info">More Info</a>';
-                html += '</div></div>';
-            });
+       // Function to display agents
+    function displayAgents(filteredAgents) {
+        var html = '';
+        var labels = ['nature', 'beach', 'bowling', 'cars', 'city', 'landscape', 'architecture', 'abstract', 'minimalistic'];
 
-            // Update the agent grid
-            $('.agent-grid2').html(html);
-        }
+        $.each(filteredAgents, function(index, agent) {
+            // Determine gender and create avatar URL
+            var gender = (index % 2 == 0) ? 'male' : 'female';
+            var avatarUrl = 'https://xsgames.co/randomusers/avatar.php?g=' + gender + '&' + (index + 1);
+
+            // Select a label for the background image URL
+            var label = labels[index % labels.length];
+
+            // Create background image URL
+            var bgImageUrl = 'https://source.unsplash.com/featured/300x' + (201 + index) + '?' + label;
+
+            // Create agent card
+            html += '<div class="agent-card agent-card-subpage">';
+            html += '<div style="background-image: url(\'' + bgImageUrl + '\');" class="agent-cover"><span class="pro">PRO</span></div>';
+            html += '<div class="agent-content">';
+            html += '<img src="' + avatarUrl + '" alt="profile" class="agent-profile" />';
+            html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
+            html += '<p>' + agent.agent_about + '</p>';
+            html += '<a href="#" class="agent-action hire-agent">Hire</a>';
+            html += '<a href="#" class="agent-action more-info">More Info</a>';
+            html += '</div></div>';
+        });
+
+        // Update the agent grid
+        $('.agent-grid2').html(html);
+    }
 
         // Handle search input keyup event
         $('.search-input').on('keyup', function() {
