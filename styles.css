@@ -767,3 +767,35 @@ input[type="submit"]:hover {
     transition: all 0.3s ease-in-out!important;
     border: none!important;
 }
+
+.agent-grid-hired {
+    display: grid;
+    justify-content: space-between;
+    border-radius: 0 0 20px 20px;
+    max-width: 1040px;
+    background-color: #d9ffed;
+    padding: 30px;
+    margin: 0 auto;
+    overflow: hidden;
+    gap: 10px;
+    justify-content: start;
+    align-items: center;
+}
+
+
+@media (max-width: 767px) {
+    .agent-grid-hired .agent-card {
+        flex-basis: 100%; /* Stack on smaller screens */
+    }
+}
+
+.text-title-hired {
+    max-width: 1040px;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 20px 20px 0 0;
+    font-size: 2.5em;
+    color: #4f8a6e;
+    padding-top: 20px;
+    background-color: #d9ffed;
+}

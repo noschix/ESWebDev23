@@ -14,16 +14,3 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 });
-
-//get element by class "hire-agent"
-
-  document.getElementById('hire-agent').addEventListener('click', function(event)  {
-  event.preventDefault();
-  document.getElementById('message').classList.remove('hidden');
-
-  confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-  });
-});
