@@ -116,7 +116,7 @@ function loadAgents() {
         displayAgentsWithHire(agents);
     });
     }
-    
+
  $('.agent-grid2').on('click', '.hire-agent, .unhire-agent', function(e) {
     e.preventDefault();
     var button = $(this);
@@ -159,6 +159,9 @@ function loadAgents() {
                 button.css('background-color', 'grey');
                 button.html('<i class="fa fa-repeat"></i> Try again');
             }
+            setTimeout(function() {
+                loadAgents();
+            }, 2000);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
@@ -196,7 +199,7 @@ $('.agent-grid-hired').on('click', '.hire-agent, .unhire-agent', function(e) {
                 }, 1500);
             } else if (response.message === 'Agent unhired successfully.') {
                 button.removeClass('unhire-agent');
-                button.css('background-color', '');
+                button.css('background-color', 'grey', 'color', 'darkgrey');
                 button.html('<i class="fa fa-repeat"></i>Re-Hire?');
                 hiredAgents = hiredAgents.filter(function(id) {
                     return id !== agentId;
@@ -205,7 +208,10 @@ $('.agent-grid-hired').on('click', '.hire-agent, .unhire-agent', function(e) {
                 button.css('background-color', 'grey');
                 button.html('<i class="fa fa-repeat"></i> Try again');
             }
-            loadAgents();
+            //5 seconds until exectution of loadAgents();
+            setTimeout(function() {
+                loadAgents();
+            }, 5000);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
@@ -289,9 +295,9 @@ function displayHiredAgents(hiredAgents) {
 
     console.log(hiredAgents);
     if (hiredAgents.length < 1) {
-        $('.my-hired').hide();
+        $('.my-hired').slideUp(1000);
     } else {
-        $('.my-hired').show();
+        $('.my-hired').slideDown(1000);
     }
 
     $.each(hiredAgents, function(index, agent) {
