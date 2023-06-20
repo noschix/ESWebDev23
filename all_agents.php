@@ -21,6 +21,4 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 echo json_encode($data);
-Print_r($_SESSION);
-
 ?>
