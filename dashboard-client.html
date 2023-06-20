@@ -97,10 +97,6 @@ $(document).ready(function() {
         var userIdElement = '<span class="user-id" style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">User ID: ' + data + '</span>';
         $(userIdElement).insertAfter('.footertext');
     });
-    // Fetch all agent data
-
-    // Fetch all hired agents
-
 
     $.getJSON('all_agents.php', function(data) {
         console.log("Received data from server:", data);
@@ -203,13 +199,13 @@ $(document).ready(function() {
     // Function to filter agents based on a search term
     function filterAgents(term) {
         return agents.filter(function(agent) {
-            return agent.agent_firstname.toLowerCase().includes(term.toLowerCase()) ||
-                agent.agent_lastname.toLowerCase().includes(term.toLowerCase()) ||
-                agent.agent_city.toLowerCase().includes(term.toLowerCase()) ||
-                agent.agent_country.toLowerCase().includes(term.toLowerCase()) ||
-                agent.agent_exp.toLowerCase().includes(term.toLowerCase()) ||
-                agent.agent_about.toLowerCase().includes(term.toLowerCase());
-        });
+    return agent.agent_firstname && agent.agent_firstname.toLowerCase().includes(term.toLowerCase()) ||
+        agent.agent_lastname && agent.agent_lastname.toLowerCase().includes(term.toLowerCase()) ||
+        agent.agent_city && agent.agent_city.toLowerCase().includes(term.toLowerCase()) ||
+        agent.agent_country && agent.agent_country.toLowerCase().includes(term.toLowerCase()) ||
+        agent.agent_exp && agent.agent_exp.toLowerCase().includes(term.toLowerCase()) ||
+        agent.agent_about && agent.agent_about.toLowerCase().includes(term.toLowerCase());
+});
     }
 
     function displayHiredAgents(hiredAgents) {
@@ -273,11 +269,11 @@ $(document).ready(function() {
             html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
             html += '<p>' + agent.agent_about + '</p>';
             // If the agent is hired, show the 'Unhire' state. Otherwise, show the 'Hire' state
-            if (hiredAgents.includes(agent.agent_id)) {
-                html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent unhire-agent"><i class="fas fa-times"></i> Unhire</a>';
-            } else {
-                html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent">Hire</a>';
-            }
+            if (hiredAgents && hiredAgents.includes(agent.agent_id)) {
+    html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent unhire-agent"><i class="fas fa-times"></i> Unhire</a>';
+} else {
+    html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent">Hire</a>';
+}
             html += '<a target="_blank" href="' + websiteUrl + '" class="agent-action more-info" style="padding: 7px;color: #ffffff;font-size: 0.7em;text-transform: uppercase;margin: 10px 0;display: inline-block;opacity: 1;width: 47%;text-align: center;text-decoration: none;font-weight: bold;">Website</a>';
             html += '</div></div>';
         });
