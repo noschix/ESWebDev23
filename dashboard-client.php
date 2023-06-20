@@ -22,9 +22,9 @@ if ($result->num_rows > 0) {
     }
 } 
 
-//echo json_encode($agents);
+echo json_encode($agents);
 
-
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,44 +69,9 @@ if ($result->num_rows > 0) {
         </div>
     </section>
 
-    <section class="agent-grid agent-grid-subpage" id="agent-results">
-        
-    <?php
-        // Assuming you have a database connection established
-        // Fetch the agent data from the databas;
-        // Loop through the result set and generate the agent cards dynamically
-        while ($row = mysqli_fetch_assoc($agents)) {
-            $imageIndex = rand(1, 100); // Generate a random index for avatar image
-
-            // Extract agent information from the row
-            $agentFirstName = $row['agent_firstname'];
-            $agentLastName = $row['agent_lastname'];
-            $agentExpertise = $row['agent_exp'];
-            $agentAbout = $row['agent_about'];
-
-            // Generate the agent card dynamically
-            echo '<div class="agent-card agent-card-subpage">';
-            echo '<div style="background-image: url(\'https://source.unsplash.com/featured/300x' . ($imageIndex + 200) . '?nature\');" class="agent-cover">';
-            echo '<span class="pro">PRO</span>';
-            echo '</div>';
-            echo '<div class="agent-content">';
-            echo '<img src="https://xsgames.co/randomusers/avatar.php?g=' . (($imageIndex % 2 == 0) ? 'female' : 'male') . '&amp;" alt="profile" class="agent-profile" />';
-            echo '<h2>' . $agentFirstName . ' ' . $agentLastName . '<span>' . $agentExpertise . '</span></h2>';
-            echo '<p>' . $agentAbout . '</p>';
-            echo '<div class="agent-actions">';
-            echo '<a href="#" class="agent-action hire-agent">Hire</a>';
-            echo '<a href="#" class="agent-action more-info">More Info</a>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
-        }
-
-        // Close the database connection
-        $conn->close();
-        ?>
+    <section class="agent-grid2 agent-grid-subpage" id="agent-results">
+        <!-- Agent cards will be dynamically populated here -->
     </section>
-
-
 
 
     <section class="agent-grid agent-grid-subpage">
@@ -229,29 +194,30 @@ if ($result->num_rows > 0) {
     </footer>
 
     <script>
-        $(document).ready(function() {
-    $('.search-input').on('keyup', function() {
-        var searchTerm = $(this).val();
-        $.getJSON('agent_search.php', { term: searchTerm }, function(data) {
-            var html = '';
-            $.each(data, function(i, agent) {
-                html += '<div class="agent-card agent-card-subpage">';
-                html += '<div style="background-image: url(\'https://source.unsplash.com/featured/300x201?nature\');" class="agent-cover"><span class="pro">PRO</span></div>';
-                html += '<div class="agent-content">';
-                html += '<img src="https://xsgames.co/randomusers/avatar.php?g=female&" alt="profile" class="agent-profile" />';
-                html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
-                html += '<p>' + agent.agent_about + '</p>';
-                html += '<div class="agent-actions">';
-                html += '<a href="#" class="agent-action hire-agent">Hire</a>';
-                html += '<a href="#" class="agent-action more-info">More Info</a>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
+    $(document).ready(function() {
+        console.log("jQuery is loaded and ready!");
+        $('.search-input').on('keyup', function() {
+            var searchTerm = $(this).val();
+            $.getJSON('agent_search.php', { term: searchTerm }, function(data) {
+                var html = '';
+                $.each(data, function(i, agent) {
+                    html += '<div class="agent-card agent-card-subpage">';
+                    html += '<div style="background-image: url(\'https://source.unsplash.com/featured/300x201?nature\');" class="agent-cover"><span class="pro">PRO</span></div>';
+                    html += '<div class="agent-content">';
+                    html += '<img src="https://xsgames.co/randomusers/avatar.php?g=female&" alt="profile" class="agent-profile" />';
+                    html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
+                    html += '<p>' + agent.agent_about + '</p>';
+                    html += '<div class="agent-actions">';
+                    html += '<a href="#" class="agent-action hire-agent">Hire</a>';
+                    html += '<a href="#" class="agent-action more-info">More Info</a>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                });
+                $('.agent-grid').html(html);
             });
-            $('.agent-grid').html(html);
         });
     });
-});
     </script>
     <script src="js/main.js"></script>
 </body>
