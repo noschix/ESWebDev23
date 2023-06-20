@@ -29,13 +29,7 @@
             </nav>
         </div>
     </header>
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Welcome back, <span id="client-name"></span>!</h1>
-            <p class="hero-description">Here you can find your hired agents and search for new ones.</p>
-        </div>
-    </section>
-    <section class="my-hired" style="width: 100%; padding: 30px 30px 1em 30px; text-align: center;">
+    <section class="my-hired" style="width: 100%; padding: 30px; text-align: center;">
         <h2 class="text-title-hired">My hired Agents</h2>
     <div class="agent-grid-hired agent-grid-subpage" id="hired-results">
         <!-- Agent cards will be dynamically populated here -->
@@ -332,17 +326,8 @@ function displayHiredAgents(hiredAgents) {
 
 $(document).ready(function() {
     $.get('getUserId.php', function(data) {
-        var userInfo = JSON.parse(data);
-        if (userInfo.error) {
-        console.error(userInfo.error);
-        } else {
-        var userId = userInfo.user_id;
-        var firstName = userInfo.first_name;
-        var userIdElement = '<span class="user-id" style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">User ID: ' + userId + '</span>';
+        var userIdElement = '<span class="user-id" style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">User ID: ' + data + '</span>';
         $(userIdElement).insertAfter('.footertext');
-        var displayName = firstName ? firstName : 'User';
-        $('.client-name').text(displayName);
-        }
     });
 
     // Load all agents

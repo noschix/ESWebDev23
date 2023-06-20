@@ -152,7 +152,7 @@ body {
 .text-content {
     max-width: 1040px;
     background-color: #fff6f1;
-    padding: 40px 40px;
+    padding: 20px 40px;
     margin: 0 auto;
     border-radius: 20px;
     overflow: hidden;
@@ -711,7 +711,7 @@ input[type="submit"]:hover {
 
 .text-section-subpage {
     text-align: center;
-    padding: 2em;
+    padding: 1em 2em 2em 2em;
     width: 100%;
 }
 
@@ -798,4 +798,24 @@ input[type="submit"]:hover {
     color: #4f8a6e;
     padding-top: 20px;
     background-color: #d9ffed;
+}
+
+.hero {
+    width: 100%;
+    padding: 30px 30px 0px 30px;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 1040px;
+    background-color: #ececec;
+    padding: 20px 20px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
 }
