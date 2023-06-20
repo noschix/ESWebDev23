@@ -214,10 +214,9 @@ function displayHiredAgents(hiredAgents) {
     var html = '';
 
     if (hiredAgents.length < 1) {
-        $('.my-hired').css('display', 'none');
+        $('.my-hired').hide();
     } else {
-        $('.my-hired').css('display', 'block');
-
+        $('.my-hired').show();
     }
 
     $.each(hiredAgents, function(index, agent) {
