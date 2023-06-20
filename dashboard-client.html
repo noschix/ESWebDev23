@@ -187,7 +187,11 @@
                 button.html('<i class="fas fa-check"></i>');
                 button.prop('disabled', true);
                 setTimeout(function() {
+                    //add .unhire-agent class
+                    button.css('background-color', '');
+                    button.css('color', '');
                     button.addClass('unhire-agent');
+                    //remove css 
                     button.html('<i class="fas fa-times"></i> Unhire');
                     button.prop('disabled', false);
                 }, 1500);
