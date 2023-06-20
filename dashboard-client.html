@@ -148,8 +148,8 @@ function displayAgentsWithHire(agents) {
         dataType: 'json',
         success: function(response) {
             hiredAgents = response;
-            displayAgents(agents);
             displayHiredAgents(hiredAgents);
+            displayAgents(agents);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
@@ -213,6 +213,7 @@ function displayAgents(filteredAgents) {
 function displayHiredAgents(hiredAgents) {
     var html = '';
 
+    print(hiredAgents);
     if (hiredAgents.length < 1) {
         $('.my-hired').hide();
     } else {
