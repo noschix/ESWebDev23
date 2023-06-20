@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/4bebb4b770.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -33,14 +33,15 @@
     
     <section class="text-section text-section-subpage">
         <div class="text-content text-content-subpage">
-            <div class="text-details">
-                <h2 class="text-title">Search for your Agent</h2>
-                <div class="search-input-container">
-                    <input type="search" class="search-input" placeholder="Search..." oninput="searchAgents(this.value)">
+                <div class="text-details">
+                    <h2 class="text-title">Search for your Agent</h2>
+                    <div class="search-input-container">
+                        <input type="search" class="search-input" placeholder="Search...">
+                    </div>
                 </div>
-            </div>
         </div>
     </section>
+    
 
     <section class="agent-grid2 agent-grid-subpage" id="agent-results">
         <!-- Agent cards will be dynamically populated here -->
@@ -203,7 +204,7 @@
             });
 
             // Update the agent grid
-            $('.agent-grid').html(html);
+            $('.agent-grid2').html(html);
         }
 
         // Handle search input keyup event
