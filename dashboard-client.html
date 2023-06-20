@@ -223,8 +223,8 @@ function displayHiredAgents(hiredAgents) {
     }
 
     $.each(hiredAgents, function(index, agent) {
-        var avatarUrl = 'https://xsgames.co/randomusers/avatar.php?g=' + agent.gender + '&' + (agent.index + 1);
-        var bgImageUrl = 'https://source.unsplash.com/featured/300x' + (201 + agent.index) + '?' + agent.label;
+        var avatarUrl = 'https://thispersondoesnotexist.com/';
+        var bgImageUrl = 'https://source.unsplash.com/featured/300x' + (201 + agent.user_id);
         var websiteUrl = agent.agent_website.includes('http') ? agent.agent_website : 'http://' + agent.agent_website;
 
         html += '<div class="agent-card agent-card-subpage">';
