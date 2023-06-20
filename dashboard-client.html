@@ -169,6 +169,37 @@
             displayAgentsWithHire(filteredAgents);
         });
 
+        
+
+        function displayAgentsWithHire(agents) {
+        $.ajax({
+            url: 'fetch_hired_agents.php',
+            type: 'get',
+            dataType: 'json',
+            success: function(response) {
+                hiredAgents = response;
+                displayAgents(agents);
+                displayHiredAgents(response);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+        }
+
+            // Function to filter agents based on a search term
+            function filterAgents(term) {
+            return agents.filter(function(agent) {
+                return agent.agent_firstname.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_lastname.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_city.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_country.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_exp.toLowerCase().includes(term.toLowerCase()) ||
+                    agent.agent_about.toLowerCase().includes(term.toLowerCase());
+            });
+        }
+
+        // Function to display hired agents
         function displayHiredAgents(hiredAgents) {
     var html = '';
 
@@ -199,35 +230,7 @@
     });
 
     $('#hired-results').html(html);
-}   
-
-        function displayAgentsWithHire(agents) {
-        $.ajax({
-            url: 'fetch_hired_agents.php',
-            type: 'get',
-            dataType: 'json',
-            success: function(response) {
-                hiredAgents = response;
-                displayAgents(agents);
-                displayHiredAgents(response);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(textStatus, errorThrown);
-            }
-        });
-        }
-
-            // Function to filter agents based on a search term
-            function filterAgents(term) {
-            return agents.filter(function(agent) {
-                return agent.agent_firstname.toLowerCase().includes(term.toLowerCase()) ||
-                    agent.agent_lastname.toLowerCase().includes(term.toLowerCase()) ||
-                    agent.agent_city.toLowerCase().includes(term.toLowerCase()) ||
-                    agent.agent_country.toLowerCase().includes(term.toLowerCase()) ||
-                    agent.agent_exp.toLowerCase().includes(term.toLowerCase()) ||
-                    agent.agent_about.toLowerCase().includes(term.toLowerCase());
-            });
-        }
+    }   
 
 
         // Display all agents initially
