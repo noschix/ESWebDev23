@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-require('db.php'); // Include your database connection script
+require('db.php');
+header('Content-Type: application/json');
 
 if(isset($_SESSION['user_id'])) {
     // Get the user ID from the session

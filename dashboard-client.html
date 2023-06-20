@@ -31,7 +31,7 @@
     </header>
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Welcome back, <span id="client-name"></span>!</h1>
+            <h1 class="hero-title">Welcome back, <span class="client-name" id="client-name"></span>!</h1>
             <p class="hero-description">Here you can find your hired agents and search for new ones.</p>
         </div>
     </section>
@@ -339,7 +339,7 @@ $(document).ready(function() {
         var userIdElement = '<span class="user-id" style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">User ID: ' + userId + '</span>';
         $(userIdElement).insertAfter('.footertext');
         var displayName = firstName ? firstName : 'User';
-        $('#client-name').text(displayName);
+        $('.client-name').text(displayName);
         }
     });
 
