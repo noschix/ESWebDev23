@@ -328,8 +328,6 @@ function displayHiredAgents(hiredAgents) {
     $('.agent-grid-hired').html(html);
 }
 
-
-
 $(document).ready(function() {
     $.get('getUserId.php', function(data) {
         var userInfo = JSON.parse(data);
@@ -341,7 +339,7 @@ $(document).ready(function() {
         var userIdElement = '<span class="user-id" style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">User ID: ' + userId + '</span>';
         $(userIdElement).insertAfter('.footertext');
         var displayName = firstName ? firstName : 'User';
-        $('.client-name').text(displayName);
+        $('#client-name').text(displayName);
         }
     });
 

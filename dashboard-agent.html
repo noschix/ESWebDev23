@@ -29,6 +29,7 @@
             </nav>
         </div>
     </header>
+
     <section class="my-hired" style="width: 100%; padding: 30px; text-align: center;">
         <h2 class="text-title-hired">My hired Agents</h2>
     <div class="agent-grid-hired agent-grid-subpage" id="hired-results">
@@ -45,9 +46,6 @@
                     </div>
                 </div>
         </div>
-    </section>
-    <section class="agent-grid2 agent-grid-subpage" id="agent-results">
-        <!-- Agent cards will be dynamically populated here -->
     </section>
     <section class="contact-section">
         <h1 class="section-title">Need help finding an agent?</h1>
@@ -88,8 +86,8 @@
 
     <script>
     var labels = ['nature', 'beach', 'bowling', 'cars', 'city', 'landscape', 'architecture', 'abstract', 'minimalistic'];
-var agents = [];
-var hiredAgents = [];
+    var agents = [];
+    var hiredAgents = [];
 
 //global function to run on page 
 function loadAgents() { 
@@ -115,65 +113,10 @@ function loadAgents() {
     });
     }
 
- $('.agent-grid2').on('click', '.hire-agent, .unhire-agent', function(e) {
-    e.preventDefault();
-    var button = $(this);
-    var agentId = button.data('agent-id');
-
-    // Change button appearance
-    button.html('<i class="fas fa-check"></i>'); // Replaces "Hire" text with checkmark
-    button.css('background-color', 'green');
-    button.css('color', 'white');
-
-    // Send a request to the server
-    $.ajax({
-        url: 'new_hire.php',
-        type: 'post',
-        data: {
-            agent_id: agentId
-        },
-        success: function(response) {
-            if (response.message === 'Agent hired successfully.') {
-                button.css('background-color', 'green');
-                button.html('<i class="fas fa-check"></i>');
-                button.prop('disabled', true);
-                hiredAgents.push(agentId);
-                setTimeout(function() {
-                    //add .unhire-agent class
-                    button.css('background-color', '');
-                    button.css('color', '');
-                    button.addClass('unhire-agent');
-                    button.html('<i class="fas fa-times"></i> Unhire');
-                    button.prop('disabled', false);
-                }, 1500);
-            } else if (response.message === 'Agent unhired successfully.') {
-                button.removeClass('unhire-agent');
-                button.css('background-color', '');
-                button.html('Hire');
-                hiredAgents = hiredAgents.filter(function(id) {
-                    return id !== agentId;
-                });
-            } else {
-                button.css('background-color', 'grey');
-                button.html('<i class="fa fa-repeat"></i> Try again');
-            }
-            setTimeout(function() {
-                loadAgents();
-            }, 2000);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-        }
-    });
-});
-
 $('.agent-grid-hired').on('click', '.hire-agent, .unhire-agent', function(e) {
     e.preventDefault();
     var button = $(this);
     var agentId = button.data('agent-id');
-
-    
-
     // Send a request to the server
     $.ajax({
         url: 'new_hire.php',
