@@ -148,8 +148,10 @@ function displayAgentsWithHire(agents) {
         dataType: 'json',
         success: function(response) {
             hiredAgents = response;
-            displayHiredAgents(hiredAgents);
+            console.log(response);
             displayAgents(agents);
+            displayHiredAgents(hiredAgents);
+
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
