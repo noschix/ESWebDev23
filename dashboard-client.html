@@ -136,6 +136,7 @@
             // Create agent card
            // var buttonClass = hiredAgents.includes(agent.agent_id) ? 'unhire-agent' : 'hire-agent';
             //var buttonLabel = hiredAgents.includes(agent.agent_id) ? 'Unhire' : 'Hire';
+            var buttonTruth = hiredAgents.includes(agent.agent_id) ? true : false;
 
 
             // Create agent card
@@ -150,7 +151,7 @@
             html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
             html += '<p>' + agent.agent_about + '</p>';
             // If the agent is hired, show the 'Unhire' state. Otherwise, show the 'Hire' state
-            if(hiredAgents.includes(agent.agent_id)) {
+            if(buttonTruth) {
                 html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent unhire-agent"><i class="fas fa-times"></i> Unhire</a>';
             } else {
                 html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent">Hire</a>';
