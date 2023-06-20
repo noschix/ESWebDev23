@@ -1,8 +1,8 @@
 
 <?php
-session_start();
+var_dump($_SESSION);
 include('db.php'); //call to the connection file
-require 'db.php'; // Replace with your file for DB connection
+
 header('Content-Type: application/json');
 
 if(isset($_SESSION['user_id']) && isset($_POST['agent_id'])) {
