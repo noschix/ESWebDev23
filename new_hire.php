@@ -24,20 +24,22 @@ if(isset($_SESSION['user_id']) && isset($_POST['agent_id'])) {
         $clientId = $clientIdRow['client_id'];
 
         // Now, insert the new relationship into the matches table
-        $insertMatch = $dbh->prepare("INSERT INTO matches (client_id, agent_id, created) VALUES (:clientId, :agentId, current_timestamp())");
+        $currentTimestamp = date('Y-m-d H:i:s');
+        $insertMatch = $dbh->prepare("INSERT INTO matches (client_id, agent_id, created) VALUES (:clientId, :agentId, :created)");
         $insertMatch->bindParam(':clientId', $clientId);
         $insertMatch->bindParam(':agentId', $agentId);
+        $insertMatch->bindParam(':created', $currentTimestamp);
         $insertMatch->execute();
         
         // If we made it here without an exception, commit the transaction
         $dbh->commit();
-        echo "Agent hired successfully.";
+        echo json_encode(["message" => "Agent hired successfully."]);
     } catch (Exception $e) {
         // An error occurred; rollback the transaction
         $dbh->rollBack();
-        echo "Failed to hire agent: " . $e->getMessage();
+        echo json_encode(["message" => "Failed to hire agent: " . $e->getMessage()]);
     }
 } else {
-    echo "User must be logged in to hire an agent.";
+    echo json_encode(["message" => "User must be logged in to hire an agent."]);
 }
 ?>
