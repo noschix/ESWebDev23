@@ -330,11 +330,11 @@ function displayHiredAgents(hiredAgents) {
 
 $(document).ready(function() {
     $.get('getUserId.php', function(data) {
-        if (userInfo.error) {
-        console.error(userInfo.error);
+        if (data.error) {
+        console.error(data.error);
         } else {
-        var userId = userInfo.user_id;
-        var firstName = userInfo.first_name;
+        var userId = data.user_id;
+        var firstName = data.first_name;
         var userIdElement = '<span class="user-id" style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">User ID: ' + userId + '</span>';
         $(userIdElement).insertAfter('.footertext');
         var displayName = firstName ? firstName : 'User';
