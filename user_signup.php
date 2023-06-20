@@ -33,6 +33,7 @@ if(mysqli_num_rows($result) > 0){
     // Check if query failed
     if(!$result){
         header("Location: query_error.html");
+        echo $query;
         die("Query failed: " . mysqli_error($conn));
     }
 
@@ -57,6 +58,7 @@ if(mysqli_num_rows($result) > 0){
     // Check if query failed
     if(!$result2){
         header("Location: query_error.html");
+        echo $query;
         die("Query failed: " . mysqli_error($conn));
     }
 
