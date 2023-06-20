@@ -194,9 +194,13 @@
                     button.html('<i class="fas fa-times"></i> Unhire');
                     button.prop('disabled', false);
                 }, 1500);
-            } else if (response.message === 'Agent unhire failed.') {
+            } else if (response.message === 'Agent unhired successfully.') {
+                button.removeClass('unhire-agent');
                 button.css('background-color', 'orange');
                 button.html('Hire');
+            } else {
+                button.css('background-color', 'grey');
+                button.html('<i class="fa fa-repeat"></i> Try again');
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
