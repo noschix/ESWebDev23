@@ -226,7 +226,7 @@
             html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
             html += '<p>' + agent.agent_about + '</p>';
             html += '<a href="#" class="agent-action hire-agent">Hire</a>';
-            html += '<a href="#" class="agent-action more-info">More Info</a>';
+            html += '<a target="_blank" href='+ (agent.agent_website?agent.agent_website:"#") +'class="agent-action more-info">More Info</a>';
             html += '</div></div>';
         });
 
