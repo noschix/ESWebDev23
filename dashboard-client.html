@@ -183,11 +183,15 @@
                 data: { agent_id: agentId },
                 success: function(response) {
             if(response.message === 'Agent hired successfully.') {
-                $this.css('background-color', 'green');
-                $this.html('<i class="fas fa-check"></i>');
-            } else if (response.message === 'Agent hire failed.') {
-                $this.css('background-color', 'orange');
-                $this.html('Hire');
+                button.css('background-color', 'green');
+                button.html('<i class="fas fa-check"></i>');
+                setTimeout(function() {
+                    button.css('background-color', 'red');
+                    button.html('<i class="fas fa-times"></i>');
+                }, 2000);
+            } else if (response.message === 'Agent unhired successfully.') {
+                button.css('background-color', 'orange');
+                button.html('Hire');
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
