@@ -16,12 +16,12 @@ if(isset($_SESSION['user_id'])) {
     $clientIdRow = $getClientId->fetch(PDO::FETCH_ASSOC);
     $clientId = $clientIdRow['client_id'];
 
-    // Get all agent IDs that the client has hired
-    $getHiredAgents = $dbh->prepare("SELECT agent_id FROM matches WHERE client_id = :clientId");
+    // Get all agent rows that the client has hired
+    $getHiredAgents = $dbh->prepare("SELECT agents.* FROM matches INNER JOIN agents ON matches.agent_id = agents.agent_id WHERE matches.client_id = :clientId");
     $getHiredAgents->bindParam(':clientId', $clientId);
     $getHiredAgents->execute();
 
-    $hiredAgents = $getHiredAgents->fetchAll(PDO::FETCH_COLUMN, 0);
+    $hiredAgents = $getHiredAgents->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($hiredAgents);
 } else {

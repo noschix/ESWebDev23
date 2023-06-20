@@ -147,11 +147,12 @@ function displayAgentsWithHire(agents) {
         type: 'get',
         dataType: 'json',
         success: function(response) {
-            hiredAgents = response;
+            hiredAgents = response.map(function(agent) {
+            return agent.agent_id;
+            });
             console.log(response);
             displayAgents(agents);
             displayHiredAgents(hiredAgents);
-
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
