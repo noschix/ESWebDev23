@@ -150,9 +150,8 @@ function displayAgentsWithHire(agents) {
             hiredAgents = response.map(function(agent) {
             return agent.agent_id;
             });
-            console.log(response);
             displayAgents(agents);
-            displayHiredAgents(hiredAgents);
+            displayHiredAgents(response);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
