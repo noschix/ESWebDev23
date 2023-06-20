@@ -1,21 +1,30 @@
 <!---Copyright Alfaro Mendoza, Alberto; Bernal, Isabella; Sacranie, Kabir Ahmed; Wenzler, Leonhard Paul Hariolf; Raissi, Noah Aria -->
 <?php
 // Assuming you have a database connection established
-include 'db.php';
+include('db.php'); 
 // Fetch all agent data from the database
-$query = "SELECT * FROM agents";
-$result = mysqli_query($connection, $query);
-
-// Create an empty array to store the agent data
-$agents = array();
-
-// Loop through the result set and store agent data in the array
-while ($row = mysqli_fetch_assoc($result)) {
-    $agents[] = $row;
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Close the database connection
-mysqli_close($connection);
+// Get search term
+$searchTerm = $_GET['term'];
+
+$sql = "SELECT * FROM agents WHERE agent_firstname LIKE '%{$searchTerm}%' OR agent_lastname LIKE '%{$searchTerm}%' OR agent_city LIKE '%{$searchTerm}%' OR agent_country LIKE '%{$searchTerm}%' OR agent_exp LIKE '%{$searchTerm}%' OR agent_about LIKE '%{$searchTerm}%'";
+$result = $conn->query($sql);
+
+$agents = [];
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        $agents[] = $row;
+    }
+} 
+
+echo json_encode($agents);
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +39,7 @@ mysqli_close($connection);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/4bebb4b770.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -184,51 +194,29 @@ mysqli_close($connection);
     </footer>
 
     <script>
-        var agents = <?php echo json_encode($agents); ?>;
-
-        // Display all agents initially
-        showAgents(agents);
-
-        function searchAgents(searchTerm) {
-            if (searchTerm.trim() === "") {
-                // If no search term is entered, display all agents
-                showAgents(agents);
-            } else {
-                // Filter the search results based on the search term
-                var filteredResults = agents.filter(function(agent) {
-                    var agentData = Object.values(agent).join(" ").toLowerCase();
-                    var searchTermLower = searchTerm.toLowerCase();
-                    return agentData.includes(searchTermLower);
-                });
-
-                // Display the filtered search results
-                showAgents(filteredResults);
-            }
-        }
-
-        function showAgents(agents) {
-            var agentResultsContainer = document.getElementById("agent-results");
-            agentResultsContainer.innerHTML = "";
-
-            agents.forEach(function(agent) {
-                var agentCardHTML = '<div class="agent-card agent-card-subpage">';
-                agentCardHTML += '<div style="background-image: url(\'https://source.unsplash.com/featured/300x201?nature\');" class="agent-cover">';
-                agentCardHTML += '<span class="pro">PRO</span>';
-                agentCardHTML += '</div>';
-                agentCardHTML += '<div class="agent-content">';
-                agentCardHTML += '<img src="https://xsgames.co/randomusers/avatar.php?g=female&amp;" alt="profile" class="agent-profile" />';
-                agentCardHTML += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
-                agentCardHTML += '<p>' + agent.agent_about + '</p>';
-                agentCardHTML += '<div class="agent-actions">';
-                agentCardHTML += '<a href="#" class="agent-action hire-agent">Hire</a>';
-                agentCardHTML += '<a href="#" class="agent-action more-info">More Info</a>';
-                agentCardHTML += '</div>';
-                agentCardHTML += '</div>';
-                agentCardHTML += '</div>';
-
-                agentResultsContainer.innerHTML += agentCardHTML;
+        $(document).ready(function() {
+    $('.search-input').on('keyup', function() {
+        var searchTerm = $(this).val();
+        $.getJSON('agent_search.php', { term: searchTerm }, function(data) {
+            var html = '';
+            $.each(data, function(i, agent) {
+                html += '<div class="agent-card agent-card-subpage">';
+                html += '<div style="background-image: url(\'https://source.unsplash.com/featured/300x201?nature\');" class="agent-cover"><span class="pro">PRO</span></div>';
+                html += '<div class="agent-content">';
+                html += '<img src="https://xsgames.co/randomusers/avatar.php?g=female&" alt="profile" class="agent-profile" />';
+                html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
+                html += '<p>' + agent.agent_about + '</p>';
+                html += '<div class="agent-actions">';
+                html += '<a href="#" class="agent-action hire-agent">Hire</a>';
+                html += '<a href="#" class="agent-action more-info">More Info</a>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
             });
-        }
+            $('.agent-grid').html(html);
+        });
+    });
+});
     </script>
     <script src="js/main.js"></script>
 </body>
