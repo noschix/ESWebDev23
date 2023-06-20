@@ -180,7 +180,7 @@ $('.agent-grid-hired').on('click', '.hire-agent, .unhire-agent', function(e) {
                 button.css('background-color', 'grey');
                 button.html('<i class="fa fa-repeat"></i> Try again');
             }
-            loadAgents();
+            GlobalFunc.functionToRun();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
@@ -328,7 +328,7 @@ $(document).ready(function() {
         }
     }
     GlobalFunc.functionToRun();
-    
+
     // Handle search input keyup event
     $('.search-input').on('keyup', function() {
         var searchTerm = $(this).val();
