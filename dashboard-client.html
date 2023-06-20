@@ -168,26 +168,34 @@
 
         $('.agent-grid2').on('click', '.hire-agent', function(e) {
             e.preventDefault();
-            var button = $(this);
-            var agentId = button.data('agent-id');
+    
+    var $this = $(this);
+    var agentId = $this.data('agent-id');
 
-            // Change button appearance
-            button.html('<i class="fas fa-check"></i>');  // Replaces "Hire" text with checkmark
-            button.css('background-color', 'green');
-            button.css('color', 'white');
-
-            // Send a request to the server
-            $.ajax({
-                url: 'new_hire.php',
-                type: 'post',
-                data: { agent_id: agentId },
-                success: function() {
-                    console.log("Agent hired successfully.");
-                },
-                error: function() {
-                    console.log("Failed to hire agent.");
-                }
-            });
+    $.ajax({
+        url: 'hire_agent.php',
+        method: 'POST',
+        data: {
+            agent_id: agentId
+        },
+        dataType: 'json',
+        success: function(response) {
+            if(response.message === 'Agent hired successfully.') {
+                $this.css('background-color', 'green');
+                $this.html('<i class="fas fa-check"></i>');
+                setTimeout(function() {
+                    $this.css('background-color', 'red');
+                    $this.html('<i class="fas fa-times"></i>');
+                }, 2000);
+            } else if (response.message === 'Agent unhired successfully.') {
+                $this.css('background-color', 'orange');
+                $this.html('Hire');
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+        });     
         });
     });
     });
