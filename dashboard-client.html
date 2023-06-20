@@ -93,17 +93,24 @@
     // Fetch all hired agents
     var hiredAgents = [];
 
+
+function displayAgentsWithHire(agents) {
     $.ajax({
         url: 'fetch_hired_agents.php',
         type: 'get',
         dataType: 'json',
         success: function(response) {
             hiredAgents = response;
+            displayAgents(agents);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
         }
     });
+}
+
+
+
 
     $.getJSON('all_agents.php', function(data) {
         console.log("Received data from server:", data);
@@ -123,6 +130,7 @@
         agent.index = index;
     });
 
+    
         // Function to filter agents based on a search term
         function filterAgents(term) {
             return agents.filter(function(agent) {
@@ -150,10 +158,8 @@
             var websiteUrl = agent.agent_website.includes('http') ? agent.agent_website : 'http://' + agent.agent_website;
 
             // Create agent card
-           // var buttonClass = hiredAgents.includes(agent.agent_id) ? 'unhire-agent' : 'hire-agent';
+            //var buttonClass = hiredAgents.includes(agent.agent_id) ? 'unhire-agent' : 'hire-agent';
             //var buttonLabel = hiredAgents.includes(agent.agent_id) ? 'Unhire' : 'Hire';
-            var buttonTruth = hiredAgents.includes(agent.agent_id) ? true : false;
-
 
             // Create agent card
             html += '<div class="agent-card agent-card-subpage">';
@@ -167,7 +173,7 @@
             html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
             html += '<p>' + agent.agent_about + '</p>';
             // If the agent is hired, show the 'Unhire' state. Otherwise, show the 'Hire' state
-            if(buttonTruth) {
+            if(hiredAgents.includes(agent.agent_id)) {
                 html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent unhire-agent"><i class="fas fa-times"></i> Unhire</a>';
             } else {
                 html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent">Hire</a>';
@@ -186,12 +192,11 @@
 
             // Filter and display agents
             var filteredAgents = filterAgents(searchTerm);
-            displayAgents(filteredAgents);
+            displayAgentsWithHire(filteredAgents);
         });
 
         // Display all agents initially
-        displayAgents(agents);
-
+        displayAgentsWithHire(agents);
         
 
         $('.agent-grid2').on('click', '.hire-agent, .unhire-agent', function(e) {
