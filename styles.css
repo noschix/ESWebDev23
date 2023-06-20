@@ -409,6 +409,7 @@ body {
 .hire-agent {
     margin-right: 4%;
     background-color: #FD5E1C;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .agent-action:hover {

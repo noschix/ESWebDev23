@@ -19,7 +19,7 @@
         $row = mysqli_fetch_assoc($result);
         if (password_verify($password, $row['password'])) { // Verifying the password
             //uuid, email, password, role, registerdate
-            $_SESSION["uuid"] = $row["uuid"];
+            $_SESSION["user_id"] = $row["user_id"];
             $_SESSION["role"] = $row["role"]; 
         
             header("Location: dashboard-client.php"); //redirect to the index page

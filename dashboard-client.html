@@ -41,94 +41,8 @@
                 </div>
         </div>
     </section>
-    
-
     <section class="agent-grid2 agent-grid-subpage" id="agent-results">
         <!-- Agent cards will be dynamically populated here -->
-    </section>
-
-
-    <section class="agent-grid agent-grid-subpage">
-        <!-- Agent Card 1 -->
-        <div class="agent-card agent-card-subpage">
-            <div style="background-image: url('https://source.unsplash.com/featured/300x201?nature');" class="agent-cover">
-            <span class="pro">PRO</span>
-            </div>
-            <div class="agent-content">
-                <img src="https://xsgames.co/randomusers/avatar.php?g=female&" alt="profile" class="agent-profile" />
-                <h2>Samantha Baker<span>Life Insurance</span></h2>
-                <p>Offering custom life insurance policies to safeguard your future and give you peace of mind. </p>
-                <div class="agent-actions">
-                    <a href="#" class="agent-action hire-agent">Hire</a>
-                    <a href="#" class="agent-action more-info">More Info</a>
-                </div>
-            </div>
-        </div>
-        <!-- Agent Card 2 -->
-        <div class="agent-card agent-card-subpage">
-            <div style="background-image: url('https://source.unsplash.com/featured/300x202?beach');" class="agent-cover">
-                <span class="pro">PRO</span>
-            </div>
-            <div class="agent-content">
-                <img src="https://xsgames.co/randomusers/avatar.php?g=male&" alt="profile" class="agent-profile" />
-                <h2>Robert Jones<span>Car Insurance</span></h2>
-                <p>Specializes in providing car insurance that covers all aspects of risk and damage. </p>
-                <a href="#" class="agent-action hire-agent">Hire</a>
-                <a href="#" class="agent-action more-info">More Info</a>
-            </div>
-        </div>
-        <!-- Agent Card 3 -->
-        <div class="agent-card agent-card-subpage">
-            <div style="background-image: url('https://source.unsplash.com/featured/300x203?landscape');" class="agent-cover">
-                <span class="pro">PRO</span>
-            </div>
-            <div class="agent-content">
-                <img src="https://xsgames.co/randomusers/avatar.php?g=female&1" alt="profile" class="agent-profile" />
-                <h2>Emily Smith<span>Health Insurance</span></h2>
-                <p>Delivers personalized health insurance plans to secure you and your family's healthcare needs. </p>
-                <a href="#" class="agent-action hire-agent">Hire</a>
-                <a href="#" class="agent-action more-info">More Info</a>
-            </div>
-        </div>
-        <!-- Agent Card 4 -->
-        <div class="agent-card agent-card-subpage">
-            <div style="background-image: url('https://source.unsplash.com/featured/300x204?city');" class="agent-cover">
-                <span class="pro">PRO</span>
-            </div>
-            <div class="agent-content">
-                <img src="https://xsgames.co/randomusers/avatar.php?g=male&1" alt="profile" class="agent-profile" />
-                <h2>Thomas Brown<span>Home Insurance</span></h2>
-                <p>Committed to securing your home and belongings with comprehensive home insurance policies. </p>
-                <a href="#" class="agent-action hire-agent">Hire</a>
-                <a href="#" class="agent-action more-info">More Info</a>
-            </div>
-        </div>
-        <!-- Agent Card 5 -->
-        <div class="agent-card agent-card-subpage">
-            <div style="background-image: url('https://source.unsplash.com/featured/300x205?bowling');" class="agent-cover">
-                <span class="pro">PRO</span>
-            </div>
-            <div class="agent-content">
-                <img src="https://xsgames.co/randomusers/avatar.php?g=female" alt="profile" class="agent-profile" />
-                <h2>Laura Johnson<span>Travel Insurance</span></h2>
-                <p>Experienced in providing broad travel insurance plans to make your journeys worry-free. </p>
-                <a href="#" class="agent-action hire-agent">Hire</a>
-                <a href="#" class="agent-action more-info">More Info</a>
-            </div>
-        </div>
-        <!-- Agent Card 6 -->
-        <div class="agent-card agent-card-subpage">
-            <div style="background-image: url('https://source.unsplash.com/featured/300x206?car');" class="agent-cover">
-                <span class="pro">PRO</span>
-            </div>
-            <div class="agent-content">
-                <img src="https://xsgames.co/randomusers/avatar.php?g=male" alt="profile" class="agent-profile" />
-                <h2>Michael Wilson<span>Business Insurance</span></h2>
-                <p>Specializes in business insurance plans to protect your assets and cover potential liabilities. </p>
-                <a href="#" class="agent-action hire-agent">Hire</a>
-                <a href="#" class="agent-action more-info">More Info</a>
-            </div>
-        </div>
     </section>
     <section class="contact-section">
         <h1 class="section-title">Need help finding an agent?</h1>
@@ -227,8 +141,8 @@
             html += '<img src="' + avatarUrl + '" alt="profile" class="agent-profile" />';
             html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
             html += '<p>' + agent.agent_about + '</p>';
-            html += '<a href="#" class="agent-action hire-agent">Hire</a>';
-            html += '<a target="_blank" href="' + websiteUrl + '" class="agent-action more-info" style="padding: 7px;color: #ffffff;font-size: 0.7em;text-transform: uppercase;margin: 10px 0;display: inline-block;opacity: 1;width: 47%;text-align: center;text-decoration: none;font-weight: bold;">More Info</a>';
+            html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent">Hire</a>';
+            html += '<a target="_blank" href="' + websiteUrl + '" class="agent-action more-info" style="padding: 7px;color: #ffffff;font-size: 0.7em;text-transform: uppercase;margin: 10px 0;display: inline-block;opacity: 1;width: 47%;text-align: center;text-decoration: none;font-weight: bold;">Website</a>';
             html += '</div></div>';
         });
 
@@ -247,6 +161,30 @@
 
         // Display all agents initially
         displayAgents(agents);
+
+        $('.agent-grid2').on('click', '.hire-agent', function(e) {
+            e.preventDefault();
+            var button = $(this);
+            var agentId = button.data('agent-id');
+
+            // Change button appearance
+            button.html('<i class="fas fa-check"></i>');  // Replaces "Hire" text with checkmark
+            button.css('background-color', 'green');
+            button.css('color', 'white');
+
+            // Send a request to the server
+            $.ajax({
+                url: 'new_hire.php',
+                type: 'post',
+                data: { agent_id: agentId },
+                success: function() {
+                    console.log("Agent hired successfully.");
+                },
+                error: function() {
+                    console.log("Failed to hire agent.");
+                }
+            });
+        });
     });
     });
     </script>
