@@ -25,7 +25,7 @@ if(isset($_SESSION['user_id']) && isset($_POST['agent_id'])) {
         $clientId = $clientIdRow['client_id'];
 
         // Now, insert the new relationship into the matches table
-        $insertMatch = $dbh->prepare("INSERT INTO matches (client_id, agent_id) VALUES (:clientId, :agentId)");
+        $insertMatch = $dbh->prepare("INSERT INTO matches (client_id, agent_id, created) VALUES (:clientId, :agentId, current_timestamp())");
         $insertMatch->bindParam(':clientId', $clientId);
         $insertMatch->bindParam(':agentId', $agentId);
         $insertMatch->execute();
