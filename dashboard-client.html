@@ -92,9 +92,31 @@
     var labels = ['nature', 'beach', 'bowling', 'cars', 'city', 'landscape', 'architecture', 'abstract', 'minimalistic'];
 var agents = [];
 var hiredAgents = [];
-//global function to run the agentfetch
-var GlobalFunc = function(){};
 
+//global function to run on page 
+function loadAgents() { 
+    $.getJSON('all_agents.php', function(data) {
+        console.log("Received data from server:", data);
+
+        agents = data;
+
+        $.each(agents, function(index, agent) {
+            // Determine gender and store on agent object
+            agent.gender = (index % 2 == 0) ? 'male' : 'female';
+
+            // Select a label for the background image URL and store on agent object
+            agent.label = labels[index % labels.length];
+            //assign pro status on random basis
+            agent.pro = (Math.random() > 0.5) ? true : false;
+
+            // Store index on agent object
+            agent.index = index;
+        });
+        // Display all agents initially
+        displayAgentsWithHire(agents);
+    });
+    }
+    
  $('.agent-grid2').on('click', '.hire-agent, .unhire-agent', function(e) {
     e.preventDefault();
     var button = $(this);
@@ -183,7 +205,7 @@ $('.agent-grid-hired').on('click', '.hire-agent, .unhire-agent', function(e) {
                 button.css('background-color', 'grey');
                 button.html('<i class="fa fa-repeat"></i> Try again');
             }
-            GlobalFunc.functionToRun();
+            loadAgents();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
@@ -305,32 +327,7 @@ $(document).ready(function() {
     });
 
     // Load all agents
-    GlobalFunc = function () { 
-        var functionToRun = function() { 
-    $.getJSON('all_agents.php', function(data) {
-        console.log("Received data from server:", data);
-
-        agents = data;
-
-        $.each(agents, function(index, agent) {
-            // Determine gender and store on agent object
-            agent.gender = (index % 2 == 0) ? 'male' : 'female';
-
-            // Select a label for the background image URL and store on agent object
-            agent.label = labels[index % labels.length];
-            //assign pro status on random basis
-            agent.pro = (Math.random() > 0.5) ? true : false;
-
-            // Store index on agent object
-            agent.index = index;
-        });
-        // Display all agents initially
-        displayAgentsWithHire(agents);
-        });
-        }
-    }
-    GlobalFunc.functionToRun();
-
+    loadAgents();
     // Handle search input keyup event
     $('.search-input').on('keyup', function() {
         var searchTerm = $(this).val();
