@@ -172,7 +172,7 @@ $('.agent-grid-hired').on('click', '.hire-agent, .unhire-agent', function(e) {
             } else if (response.message === 'Agent unhired successfully.') {
                 button.removeClass('unhire-agent');
                 button.css('background-color', '');
-                button.html('Hire');
+                button.html('<i class="fa fa-repeat"></i>Re-Hire?');
                 hiredAgents = hiredAgents.filter(function(id) {
                     return id !== agentId;
                 });
@@ -293,6 +293,9 @@ function displayHiredAgents(hiredAgents) {
     $('.agent-grid-hired').html(html);
 }
 
+//global function to run the agentfetch
+var GlobalFunc = function(){}
+
 $(document).ready(function() {
     $.get('getUserId.php', function(data) {
         var userIdElement = '<span class="user-id" style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">User ID: ' + data + '</span>';
@@ -300,8 +303,8 @@ $(document).ready(function() {
     });
 
     // Load all agents
-    loadAgents();
-    function loadAgents() { 
+    GlobalFunc = function () { 
+        var functionToRun = function() { 
     $.getJSON('all_agents.php', function(data) {
         console.log("Received data from server:", data);
 
@@ -321,8 +324,11 @@ $(document).ready(function() {
         });
         // Display all agents initially
         displayAgentsWithHire(agents);
-    });
+        });
+        }
     }
+    GlobalFunc.functionToRun();
+    
     // Handle search input keyup event
     $('.search-input').on('keyup', function() {
         var searchTerm = $(this).val();
