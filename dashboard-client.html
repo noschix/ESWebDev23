@@ -141,6 +141,53 @@ var hiredAgents = [];
     });
 });
 
+$('.agent-grid-hired').on('click', '.hire-agent, .unhire-agent', function(e) {
+    e.preventDefault();
+    var button = $(this);
+    var agentId = button.data('agent-id');
+
+    
+
+    // Send a request to the server
+    $.ajax({
+        url: 'new_hire.php',
+        type: 'post',
+        data: {
+            agent_id: agentId
+        },
+        success: function(response) {
+            if (response.message === 'Agent hired successfully.') {
+                button.css('background-color', 'green');
+                button.html('<i class="fas fa-check"></i>');
+                button.prop('disabled', true);
+                hiredAgents.push(agentId);
+                setTimeout(function() {
+                    //add .unhire-agent class
+                    button.css('background-color', '');
+                    button.css('color', '');
+                    button.addClass('unhire-agent');
+                    button.html('<i class="fas fa-times"></i> Unhire');
+                    button.prop('disabled', false);
+                }, 1500);
+            } else if (response.message === 'Agent unhired successfully.') {
+                button.removeClass('unhire-agent');
+                button.css('background-color', '');
+                button.html('Hire');
+                hiredAgents = hiredAgents.filter(function(id) {
+                    return id !== agentId;
+                });
+            } else {
+                button.css('background-color', 'grey');
+                button.html('<i class="fa fa-repeat"></i> Try again');
+            }
+            loadAgents();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+});
+
 function displayAgentsWithHire(agents) {
     $.ajax({
         url: 'fetch_hired_agents.php',
@@ -236,9 +283,10 @@ function displayHiredAgents(hiredAgents) {
         html += '<div class="agent-content">';
         html += '<img src="' + avatarUrl + '" alt="profile" class="agent-profile" />';
         html += '<h2>' + agent.agent_firstname + ' ' + agent.agent_lastname + '<span>' + agent.agent_exp + '</span></h2>';
+        html += '<span>' + agent.agent_city + ','+agent.agent_country+'</p>';
         html += '<p>' + agent.agent_about + '</p>';
         html += '<a href="#" data-agent-id="' + agent.agent_id + '" class="agent-action hire-agent unhire-agent"><i class="fas fa-times"></i> Unhire</a>';
-        html += '<a target="_blank" href="' + websiteUrl + '" class="agent-action more-info" style="padding: 7px;color: #ffffff;font-size: 0.7em;text-transform: uppercase;margin: 10px 0;display: inline-block;opacity: 1;width: 47%;text-align: center;text-decoration: none;font-weight: bold;">Website</a>';
+        html += '<a target="_blank" href="' +  websiteUrl + '" class="agent-action more-info" style="padding: 7px;color: #ffffff;font-size: 0.7em;text-transform: uppercase;margin: 10px 0;display: inline-block;opacity: 1;width: 47%;text-align: center;text-decoration: none;font-weight: bold;">Website</a>';
         html += '</div></div>';
     });
 
@@ -251,6 +299,9 @@ $(document).ready(function() {
         $(userIdElement).insertAfter('.footertext');
     });
 
+    // Load all agents
+    loadAgents();
+    function loadAgents() { 
     $.getJSON('all_agents.php', function(data) {
         console.log("Received data from server:", data);
 
@@ -271,9 +322,7 @@ $(document).ready(function() {
         // Display all agents initially
         displayAgentsWithHire(agents);
     });
-
-
-
+    }
     // Handle search input keyup event
     $('.search-input').on('keyup', function() {
         var searchTerm = $(this).val();
