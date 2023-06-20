@@ -84,6 +84,10 @@
     <script>
     var labels = ['nature', 'beach', 'bowling', 'cars', 'city', 'landscape', 'architecture', 'abstract', 'minimalistic'];
     $(document).ready(function() {
+        $.get('getUserId.php', function(data) {
+        var userIdElement = '<li class="menu-item"><p class="user-id">User ID: ' + data + '</p></li>';
+        $(userIdElement).insertBefore('.login');
+    });
     // Fetch all agent data
     $.getJSON('all_agents.php', function(data) {
         console.log("Received data from server:", data);
