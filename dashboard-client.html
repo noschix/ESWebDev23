@@ -93,43 +93,6 @@
     // Fetch all hired agents
     var hiredAgents = [];
 
-
-function displayAgentsWithHire(agents) {
-    $.ajax({
-        url: 'fetch_hired_agents.php',
-        type: 'get',
-        dataType: 'json',
-        success: function(response) {
-            hiredAgents = response;
-            displayAgents(agents);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-        }
-    });
-}
-
-
-
-
-    $.getJSON('all_agents.php', function(data) {
-        console.log("Received data from server:", data);
-
-        var agents = data;
-
-        $.each(agents, function(index, agent) {
-        // Determine gender and store on agent object
-        agent.gender = (index % 2 == 0) ? 'male' : 'female';
-
-        // Select a label for the background image URL and store on agent object
-        agent.label = labels[index % labels.length];
-        //assign pro status on random basis
-        agent.pro = (Math.random() > 0.5) ? true : false;
-
-        // Store index on agent object
-        agent.index = index;
-    });
-
     
         // Function to filter agents based on a search term
         function filterAgents(term) {
@@ -194,6 +157,39 @@ function displayAgentsWithHire(agents) {
             var filteredAgents = filterAgents(searchTerm);
             displayAgentsWithHire(filteredAgents);
         });
+
+        function displayAgentsWithHire(agents) {
+    $.ajax({
+        url: 'fetch_hired_agents.php',
+        type: 'get',
+        dataType: 'json',
+        success: function(response) {
+            hiredAgents = response;
+            displayAgents(agents);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+}
+
+    $.getJSON('all_agents.php', function(data) {
+        console.log("Received data from server:", data);
+
+        var agents = data;
+
+        $.each(agents, function(index, agent) {
+        // Determine gender and store on agent object
+        agent.gender = (index % 2 == 0) ? 'male' : 'female';
+
+        // Select a label for the background image URL and store on agent object
+        agent.label = labels[index % labels.length];
+        //assign pro status on random basis
+        agent.pro = (Math.random() > 0.5) ? true : false;
+
+        // Store index on agent object
+        agent.index = index;
+    });
 
         // Display all agents initially
         displayAgentsWithHire(agents);
