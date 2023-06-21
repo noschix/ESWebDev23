@@ -1,104 +1,10 @@
-<!---Copyright Raissi, Noah Aria -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name=”robots” content=”noindex”>
-
-    <title>Client Dashboard - SecretAgent</title>
-    <link rel="stylesheet" href="styles.css" type="text/css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://kit.fontawesome.com/4bebb4b770.js" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $.get('checkSession.php', function(data) {
-                if(data.session_exists === false) {
-                    window.location.href = "login.html"; // Redirect to login page
-                }
-            });
-        });
-    </script>
-</head>
-<body>
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-container">
-                <a href="index.html"><img src="images/logo.png" alt="SecretAgent Logo" class="logo"></a>
-            </div>
-            <nav class="nav-menu">
-                <ul class="menu-list">
-                    <li class="menu-item"><a href="#" id="logoutButton" class="login">Sign Out</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Welcome back, <span class="client-name" id="client-name"></span>!</h1>
-            <p class="hero-description">Here you can find your contracted Clients.</p>
-        </div>
-    </section>
-
-    <section class="my-hired" style="width: 100%; padding: 30px; text-align: center;">
-        <h2 class="text-title-hired">My Clients</h2>
-    <div class="agent-grid-hired agent-grid-subpage" id="hired-results">
-        <!-- Agent cards will be dynamically populated here -->
-         
-    </div>
-    </section>  
-    
-    <section class="contact-section">
-        <h1 class="section-title">Need help with a client?</h1>
-        <p class="contact-description">We're here to help and answer any question you might have. We look forward to hearing from you 🤝 
-        </p>
-        <div class="contact-info">
-            <div class="contact-phone">
-                <i class="fa-solid fa-phone fa-2xl"></i>
-                <div><h3>Hotline</h3><p>+34 123 45 67</p></div>
-            </div>
-            <div class="contact-email">
-                <i class="fa-solid fa-envelope fa-2xl"></i>
-                <div>
-                    <h3>Email</h3>
-                    <p>info@SecretAgent.com</p>
-                </div>
-            </div>
-            <div class="contact-address">
-                <i class="fa-solid fa-map-marker-alt fa-2xl"></i>
-                <div>
-                    <h3>Office Address</h3>
-                    <p>Carrer del Rossello 20, Barcelona, ES</p>
-                </div>
-            </div>
-            <div class="contact-hours">
-                <i class="fa-solid fa-clock fa-2xl"></i>
-                <div>
-                    <h3>Contact Hours</h3>
-                    <p>9:00 - 15:00</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <footer>
-        <p>Made with <svg viewBox="0 0 1792 1792" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="height: 0.8rem;"><path d="M896 1664q-26 0-44-18l-624-602q-10-8-27.5-26T145 952.5 77 855 23.5 734 0 596q0-220 127-344t351-124q62 0 126.5 21.5t120 58T820 276t76 68q36-36 76-68t95.5-68.5 120-58T1314 128q224 0 351 124t127 344q0 221-229 450l-623 600q-18 18-44 18z" fill="#e25555"></path></svg> in our Web-Dev Class @ Esade</p>
-        <span class="footertext" style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">Version 1.3</span>
-    </footer>
-
-    <script>
-    var labels = ['nature', 'beach', 'bowling', 'cars', 'city', 'landscape', 'architecture', 'abstract', 'minimalistic'];
-    var agents = [];
-    var hiredAgents = [];
+var labels = ['nature', 'beach', 'bowling', 'cars', 'city', 'landscape', 'architecture', 'abstract', 'minimalistic'];
+var agents = [];
+var hiredAgents = [];
 
 //global function to run on page 
 function loadAgents() { 
-    $.getJSON('all_agents.php', function(data) {
+    $.getJSON('../all_agents.php', function(data) {
         console.log("Received data from server:", data);
 
         agents = data;
@@ -120,13 +26,68 @@ function loadAgents() {
     });
     }
 
+ $('.agent-grid2').on('click', '.hire-agent, .unhire-agent', function(e) {
+    e.preventDefault();
+    var button = $(this);
+    var agentId = button.data('agent-id');
+
+    // Change button appearance
+    button.html('<i class="fas fa-check"></i>'); // Replaces "Hire" text with checkmark
+    button.css('background-color', 'green');
+    button.css('color', 'white');
+
+    // Send a request to the server
+    $.ajax({
+        url: '../new_hire.php',
+        type: 'post',
+        data: {
+            agent_id: agentId
+        },
+        success: function(response) {
+            if (response.message === 'Agent hired successfully.') {
+                button.css('background-color', 'green');
+                button.html('<i class="fas fa-check"></i>');
+                button.prop('disabled', true);
+                hiredAgents.push(agentId);
+                setTimeout(function() {
+                    //add .unhire-agent class
+                    button.css('background-color', '');
+                    button.css('color', '');
+                    button.addClass('unhire-agent');
+                    button.html('<i class="fas fa-times"></i> Unhire');
+                    button.prop('disabled', false);
+                }, 1500);
+            } else if (response.message === 'Agent unhired successfully.') {
+                button.removeClass('unhire-agent');
+                button.css('background-color', '');
+                button.html('Hire');
+                hiredAgents = hiredAgents.filter(function(id) {
+                    return id !== agentId;
+                });
+            } else {
+                button.css('background-color', 'grey');
+                button.html('<i class="fa fa-repeat"></i> Try again');
+            }
+            setTimeout(function() {
+                loadAgents();
+            }, 2000);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+});
+
 $('.agent-grid-hired').on('click', '.hire-agent, .unhire-agent', function(e) {
     e.preventDefault();
     var button = $(this);
     var agentId = button.data('agent-id');
+
+    
+
     // Send a request to the server
     $.ajax({
-        url: 'new_hire.php',
+        url: '../new_hire.php',
         type: 'post',
         data: {
             agent_id: agentId
@@ -169,7 +130,7 @@ $('.agent-grid-hired').on('click', '.hire-agent, .unhire-agent', function(e) {
 
 function displayAgentsWithHire(agents) {
     $.ajax({
-        url: 'fetch_hired_agents.php',
+        url: '../fetch_hired_agents.php',
         type: 'get',
         dataType: 'json',
         success: function(response) {
@@ -208,6 +169,10 @@ function displayAgents(filteredAgents) {
         // Create background image URL
         var bgImageUrl = 'https://source.unsplash.com/featured/300x' + (201 + agent.index) + '?' + agent.label;
         var websiteUrl = agent.agent_website.includes('http') ? agent.agent_website : 'http://' + agent.agent_website;
+
+        // Create agent card
+        //var buttonClass = hiredAgents.includes(agent.agent_id) ? 'unhire-agent' : 'hire-agent';
+        //var buttonLabel = hiredAgents.includes(agent.agent_id) ? 'Unhire' : 'Hire';
 
         // Create agent card
         html += '<div class="agent-card agent-card-subpage">';
@@ -268,12 +233,18 @@ function displayHiredAgents(hiredAgents) {
     $('.agent-grid-hired').html(html);
 }
 
-
-
 $(document).ready(function() {
-    $.get('getUserId.php', function(data) {
-        var userIdElement = '<span class="user-id" style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">User ID: ' + data + '</span>';
+    $.get('../getUserId.php', function(data) {
+        if (data.error) {
+        console.error(data.error);
+        } else {
+        var userId = data.user_id;
+        var firstName = data.first_name;
+        var userIdElement = '<span class="user-id" style="text-align: center; margin: 0 auto; width: 100%; font-size: xx-small; display: block; padding-bottom: 10px; color: lightslategrey;">User ID: ' + userId + '</span>';
         $(userIdElement).insertAfter('.footertext');
+        var displayName = firstName ? firstName : 'User';
+        $('.client-name').text(displayName);
+        }
     });
 
     // Load all agents
@@ -288,12 +259,8 @@ $(document).ready(function() {
     });
 
     $('#logoutButton').click(function() {
-        $.get('logout.php', function() {
+        $.get('../logout.php', function() {
             window.location.href = "login.html"; // redirect to the login page or homepage
         });
     });
 });
-    </script>
-    <script src="js/main.js"></script>
-</body>
-</html>

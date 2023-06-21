@@ -27,7 +27,7 @@ if(mysqli_num_rows($result) > 0){
 
     // Insert user into database
     //user table strucutre = iduser, email, password, role, registered
-    $query = "INSERT INTO `users` (`uuid`,`email`, `password`, `role`, `registered`) VALUES (NULL,'$email', '$password', '$role', current_timestamp())";
+    $query = "INSERT INTO `users` (`uuid`,`email`, `password`, `role`, `registered`) VALUES (NULL,`$email`, `$password`, `$role`, current_timestamp())";
 
     $result = mysqli_query($conn, $query); 
 
@@ -48,10 +48,10 @@ if(mysqli_num_rows($result) > 0){
         $agent_website = $_POST['agent_website'];
         $agent_exp = $_POST['agent_exp'];
         //agent table structure = user_id, agent_firstname, agent_lastname, agent_about, agent_city, agent_country, agent_website
-        $query = "INSERT INTO `agents` (`agent_id`,`user_id`, `agent_firstname`, `agent_lastname`,`agent_exp`,`agent_about`, `agent_city`, `agent_country`, `agent_website`) VALUES (NULL,'$user_id', '$firstname', '$lastname','$agent_exp','$agent_about', '$agent_city', '$agent_country', '$agent_website')";
+        $query = "INSERT INTO `agents` (`agent_id`,`user_id`, `agent_firstname`, `agent_lastname`,`agent_exp`,`agent_about`, `agent_city`, `agent_country`, `agent_website`) VALUES (NULL,`$user_id`, `$firstname`, `$lastname`,`$agent_exp`,`$agent_about`, `$agent_city`, `$agent_country`, `$agent_website`)";
     } else {
         //client table structure = user_id, client_firstname, client_lastname
-        $query = "INSERT INTO `clients` (`client_id`,`user_id`, `client_firstname`, `client_lastname`) VALUES (NULL,'$user_id', '$firstname', '$lastname')";
+        $query = "INSERT INTO `clients` (`client_id`,`user_id`, `client_firstname`, `client_lastname`) VALUES (NULL,`$user_id`, `$firstname`, `$lastname`)";
     }
     
     $result2 = mysqli_query($conn, $query);
