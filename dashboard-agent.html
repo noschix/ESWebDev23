@@ -15,6 +15,15 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/4bebb4b770.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.get('checkSession.php', function(data) {
+                if(data.session_exists === false) {
+                    window.location.href = "login.html"; // Redirect to login page
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <header class="header">
@@ -199,10 +208,6 @@ function displayAgents(filteredAgents) {
         // Create background image URL
         var bgImageUrl = 'https://source.unsplash.com/featured/300x' + (201 + agent.index) + '?' + agent.label;
         var websiteUrl = agent.agent_website.includes('http') ? agent.agent_website : 'http://' + agent.agent_website;
-
-        // Create agent card
-        //var buttonClass = hiredAgents.includes(agent.agent_id) ? 'unhire-agent' : 'hire-agent';
-        //var buttonLabel = hiredAgents.includes(agent.agent_id) ? 'Unhire' : 'Hire';
 
         // Create agent card
         html += '<div class="agent-card agent-card-subpage">';
