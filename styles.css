@@ -599,7 +599,7 @@ footer p {
 
     > h2 {
         font-size: 2em;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 }
 
@@ -613,7 +613,7 @@ footer p {
 
     > h2 {
         font-size: 2em;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 }
 
@@ -634,7 +634,7 @@ form p {
 
 label {
     display: block;
-    margin-top: 10px;
+    margin-top: 15px;
     color: #222222;
     font-size: small;
 }
@@ -655,7 +655,7 @@ label:last-child {
 
 input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     margin-top: 5px;
     border-radius: 5px;
     border: 1px solid #454545;
@@ -670,7 +670,7 @@ input:focus {
 input[type="submit"] {
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     margin-top: 20px;
     background-color: #FD5E1C;
     color: #fff;
@@ -818,4 +818,89 @@ input[type="submit"]:hover {
     gap: 20px;
     justify-content: center;
     align-items: center;
+}
+
+.agent-action-homepage {
+    padding: 7px;
+    color: #ffffff;
+    font-size: 0.7em;
+    text-transform: uppercase;
+    margin: 10px 0;
+    display: inline-block;
+    opacity: 1;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    border-radius: 5px;
+    transition: scale 0.3s ease;
+}
+
+.signuporregister{
+    padding: 7px 7px 20px 7px;
+    color: #FD5E1C;
+    font-size: 1em;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    transition: scale 0.3s ease;
+}
+
+.faq-section
+{
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.title
+{
+  font-size: 3rem;
+  margin: 2rem 0;
+}
+
+.faq
+{
+  width: 100%;
+  margin-top: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #282727;
+  cursor: pointer;
+}
+
+.question
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.question h3
+{
+  font-size: 1.8rem;
+}
+
+.answer
+{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+}
+
+.answer p
+{
+  padding-top: 1rem;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.faq.active .answer
+{
+  max-height: 500px;
 }
