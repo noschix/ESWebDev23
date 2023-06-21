@@ -23,7 +23,7 @@ if ($result == false){
 if(mysqli_num_rows($result) > 0){
     header("Location: user_exists.html"); 
    die("User already exists");
-} else else {
+} else {
 
     // Insert user into database
     //user table strucutre = iduser, email, password, role, registered
