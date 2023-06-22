@@ -263,4 +263,48 @@ $(document).ready(function() {
             window.location.href = "login.html"; // redirect to the login page or homepage
         });
     });
+
+    $('#delete-account-button').click(function() {
+        if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
+            $.post('../deleteUser.php', function(response) {
+                if(response.status == 'success') {
+                    alert('Your account has been deleted.');
+                    window.location.href = 'index.html';
+                } else {
+                    alert('An error occurred: ' + response.error);
+                }
+            });
+        }
+    });
 });
+
+
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const openModalBtn = document.querySelector(".btn-open");
+const closeModalBtn = document.querySelector(".btn-close");
+
+// close modal function
+const closeModal = function () {
+  modal.classList.add("hidden");
+  overlay.classList.add("hidden");
+};
+
+// close the modal when the close button and overlay is clicked
+closeModalBtn.addEventListener("click", closeModal);
+overlay.addEventListener("click", closeModal);
+
+// close modal when the Esc key is pressed
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+    closeModal();
+  }
+});
+
+// open modal function
+const openModal = function () {
+  modal.classList.remove("hidden");
+  overlay.classList.remove("hidden");
+};
+// open modal event
+openModalBtn.addEventListener("click", openModal);
