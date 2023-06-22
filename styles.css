@@ -956,6 +956,7 @@ input[type="submit"]:hover {
     border: none;
     font-weight: 800;
     margin: 0 auto;
+    margin-bottom: 20px;
   }
 
   .btn-open {
