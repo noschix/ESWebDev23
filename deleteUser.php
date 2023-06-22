@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include('db.php'); 
 header('Content-Type: application/json');
@@ -12,8 +13,8 @@ if(isset($_SESSION['user_id'])) {
         die(json_encode(['error' => 'Connection failed: ' . $connNew->connect_error]));
     }
 
-    $stmt = $connNew->prepare("DELETE FROM users WHERE uuid = :userId");
-    $stmt->bind_param(":userId", $userId);
+    $stmt = $connNew->prepare("DELETE FROM users WHERE uuid = ?");
+    $stmt->bind_param("i", $userId); 
 
     if($stmt->execute()){
         session_unset();
