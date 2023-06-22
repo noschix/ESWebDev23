@@ -6,7 +6,7 @@ include 'db.php'
 if(isset($_SESSION['user_id'])) {
     $userId = $_SESSION['user_id'];
     //establish your db connection here
-    $connNew = $conn
+    $connNew = $conn;
 
     if ($connNew->connect_error) {
         die(json_encode(['error' => 'Connection failed: ' . $connNew->connect_error]));
