@@ -915,9 +915,9 @@ input[type="submit"]:hover {
     max-width: 350px;
     padding: 1.3rem;
     min-height: 250px;
-    position: absolute;
+    position: fixed;
     z-index: 2;
-    top: 20%;
+    top: 50vh;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 15px;
